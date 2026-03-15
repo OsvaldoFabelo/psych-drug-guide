@@ -18,7 +18,31 @@ body{font-family:Georgia,serif;background:#0f1117;color:#e8e0d0}
 .drug-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;padding:10px 14px;background:#1a1f2e;border-radius:8px;border:1px solid #2a2f3e;align-items:center}
 .df-btn{background:#12151f;border:1px solid #2a2f3e;color:#6b7a99;padding:4px 9px;border-radius:12px;cursor:pointer;font-size:8px;font-family:Georgia,serif;transition:all .15s}
 .df-btn.on{color:#0f1117;font-weight:600}
-.gg{display:grid;gap:9px}
+.gg{display:grid;gap:9px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+@media(max-width:700px){
+  .gg{grid-template-columns:1fr}
+  .cnt{padding:10px 10px}
+  .hdr{padding:10px 12px}
+  .title{font-size:11px}
+  .drug-filter{padding:8px 10px;gap:5px}
+  .df-btn{font-size:8px;padding:4px 8px}
+  .card .cb,.card .ch,.cb,.ch{padding:8px 10px}
+  .lbl{font-size:7px}
+  .t9{font-size:8px}
+  .pr span:last-child,.pr span{font-size:8px}
+  .qcard{padding:14px}
+  .mon{grid-template-columns:1fr}
+  .tg{grid-template-columns:1fr}
+  .spanall .tg{grid-template-columns:1fr}
+}
+@media(min-width:701px) and (max-width:1100px){
+  .gg{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+  .mon{grid-template-columns:1fr 1fr}
+}
+@media(min-width:1101px){
+  .gg{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+  .mon{grid-template-columns:1fr 1fr 1fr}
+}
 .card{background:#1a1f2e;border-radius:8px;overflow:hidden}
 .ch{padding:9px 11px}
 .cb{padding:9px 11px}
@@ -258,7 +282,7 @@ function overview(){
     return '<div style="padding:5px 6px;border-bottom:1px solid #2a2f3e;font-size:7px;color:#6b7a99;background:'+bg+'">'+key+'</div>'+
       DA.map(d=>'<div style="padding:5px 6px;border-bottom:1px solid #2a2f3e;font-size:7px;color:'+AC[d.brand]+';background:'+bg+'">'+(snapData[key][d.brand]||'?')+'</div>').join('');
   }).join('');
-  return filterBar()+'<div class="gg" style="grid-template-columns:repeat('+DA.length+',1fr)">'+cards+'</div>'+
+  return filterBar()+'<div class="gg" style="">'+cards+'</div>'+
     '<div class="cmp"><div class="lbl" style="margin-bottom:8px">Head-to-Head Snapshot</div>'+
     '<div style="display:grid;grid-template-columns:1fr repeat('+DA.length+',1fr);min-width:1000px">'+hdr+rows+'</div></div>';
 }
@@ -269,7 +293,7 @@ function mechanism(){
     '<div style="padding:7px 10px;border-bottom:1px solid '+d.color+'30"><span style="font-size:10px;color:'+d.accent+';font-weight:600">'+d.brand+'</span></div>'+
     '<div class="cb">'+d.mech.map(m=>'<div class="mblk"><span style="font-size:10px">'+m.i+'</span><div><div style="font-size:7px;font-weight:600;color:'+d.accent+';margin-bottom:1px">'+m.r+'</div><div style="font-size:7px;color:#c8d0e0">'+m.e+'</div></div></div>').join('')+
     '<div class="nbn" style="background:'+d.color+'15;border:1px solid '+d.color+'30"><div style="font-size:7px;color:'+d.accent+';text-transform:uppercase;letter-spacing:2px;margin-bottom:2px">NBN</div><div style="font-size:7px;color:#c8d0e0">'+d.nbn+'</div></div></div></div>').join('');
-  return filterBar()+'<div class="gg" style="grid-template-columns:repeat('+DA.length+',1fr)">'+cards+
+  return filterBar()+'<div class="gg" style="">'+cards+
     '<div class="spanall"><div class="lbl" style="margin-bottom:8px">Invega vs Risperdal — Same Drug, Different Story</div>'+
     '<div class="tg">'+
     '<div><strong style="color:#67e8f9">Invega (paliperidone)</strong> is the 9-OH active metabolite of <strong style="color:#4fc3f7">Risperdal (risperidone)</strong>. The receptor profiles are essentially identical — D2 + 5-HT2A + α1 + H1 blockade. The critical clinical difference is pharmacokinetic, not pharmacodynamic: paliperidone is eliminated renally and is NOT metabolized by CYP enzymes. Risperidone goes through CYP2D6. This means Invega has far fewer drug-drug interactions and is predictable in patients on complex regimens.</div>'+
@@ -279,7 +303,7 @@ function mechanism(){
 
 function dosing(){
   var DA=getDA();
-  return filterBar()+'<div class="gg" style="grid-template-columns:repeat('+DA.length+',1fr)">'+DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40">'+
+  return filterBar()+'<div class="gg" style="">'+DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40">'+
     '<div style="padding:7px 10px;border-bottom:1px solid '+d.color+'30"><span style="font-size:10px;color:'+d.accent+';font-weight:600">'+d.brand+'</span></div>'+
     '<div class="cb">'+[["Starting Dose",d.dos.s],["Target",d.dos.t],["Maximum",d.dos.m],["Clinical Notes",d.dos.sw]].map(([l,v])=>
     '<div class="drow"><div class="dl">'+l+'</div><div style="font-size:8px;color:'+d.accent+'">'+v+'</div></div>').join('')+
@@ -371,21 +395,21 @@ function lais(){
      ["⚠️ 3–4 week taper","asenapine, olanzapine, quetiapine","#e09000"],
      ["❌ 4+ week taper","clozapine","#e53e3e"]].map(([label,drugs,color])=>
     '<div style="padding:8px;background:#12151f;border-radius:6px;border-top:3px solid '+color+'"><div style="font-size:8px;color:'+color+';text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">'+label+'</div><div style="font-size:8px;color:#c8d0e0;line-height:1.6">'+drugs+'</div></div>').join('')+'</div></div>';
-  return filterBar()+'<div class="gg" style="grid-template-columns:repeat('+DA.length+',1fr)">'+cards+'</div>'+taper;
+  return filterBar()+'<div class="gg" style="">'+cards+'</div>'+taper;
 }
 
 function sideEffects(){
   var DA=getDA();
   var cards=DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40"><div style="padding:7px 10px;border-bottom:1px solid '+d.color+'30"><span style="font-size:10px;color:'+d.accent+';font-weight:600">'+d.brand+'</span></div><div class="cb">'+d.se.map(s=>'<div class="se-r"><div><div style="font-size:8px;color:#c8d0e0">'+s.n+'</div><div style="font-size:7px;color:#6b7a99">'+s.nt+'</div></div><div class="dots">'+dots(s.v)+'</div></div>').join('')+'</div></div>').join('');
   var mons=["BMI monthly ×3, then quarterly","Fasting glucose + lipids at 3 mo, then annually","BP at 3 months, then annually","AIMS for tardive dyskinesia","Prolactin if symptomatic","Cobenfy: LFTs + bilirubin before starting","Cobenfy: urinary retention monitoring","Geodon: baseline EKG + K+ + Mg2+","Haldol: AIMS q6–12 months","Abilify/Rexulti: akathisia monitoring","Rexulti: impulse control monitoring","Latuda: bedtime dosing recommended","Clozaril: ANC per REMS schedule","Clozaril: troponin + CRP weekly × first month","Clozaril: trough plasma level at 200 mg bedtime","Clozaril: bowel function — docusate for all patients","Caplyta: evening dosing recommended","Vraylar: monitor for adverse effects for weeks after dose changes","Invega: prolactin monitoring — osteoporosis risk in low-estrogen women","Invega: renal function before starting — renally cleared","Invega: baseline EKG — more QTc prolongation than some SGAs"];
-  return filterBar()+'<div class="gg" style="grid-template-columns:repeat('+DA.length+',1fr);margin-bottom:12px">'+cards+'</div>'+
+  return filterBar()+'<div class="gg" style="margin-bottom:12px;">'+cards+'</div>'+
     '<div style="background:#1a1f2e;border-radius:8px;border:1px solid #2a2f3e;padding:11px 14px"><div class="lbl">Monitoring — All 13 Agents</div><div class="mon">'+
     mons.map(m=>'<div class="mi"><span style="color:#4fc3f7;margin-right:4px">✓</span>'+m+'</div>').join('')+'</div></div>';
 }
 
 function pearls(){
   var DA=getDA();
-  return filterBar()+'<div class="gg" style="grid-template-columns:repeat('+DA.length+',1fr)">'+DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40"><div style="padding:7px 10px;border-bottom:1px solid '+d.color+'30"><span style="font-size:10px;color:'+d.accent+';font-weight:600">'+d.brand+'</span></div><div class="cb">'+d.pearls.map(p=>'<div class="pr"><span style="color:'+d.accent+';font-size:8px;flex-shrink:0">◆</span><span style="font-size:8px;color:#c8d0e0;line-height:1.6">'+p+'</span></div>').join('')+'</div></div>').join('')+'</div>';
+  return filterBar()+'<div class="gg" style="">'+DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40"><div style="padding:7px 10px;border-bottom:1px solid '+d.color+'30"><span style="font-size:10px;color:'+d.accent+';font-weight:600">'+d.brand+'</span></div><div class="cb">'+d.pearls.map(p=>'<div class="pr"><span style="color:'+d.accent+';font-size:8px;flex-shrink:0">◆</span><span style="font-size:8px;color:#c8d0e0;line-height:1.6">'+p+'</span></div>').join('')+'</div></div>').join('')+'</div>';
 }
 
 var QZ=[

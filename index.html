@@ -1,1 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psych Drug Guide — Antipsychotic Reference</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,serif;background:#0f1117;color:#e8e0d0;font-size:16px}
 
+/* LANDING PAGE */
+.landing{position:fixed;inset:0;background:#080b10;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:40px 24px;text-align:center;overflow:hidden}
+.landing::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,#0d2a4a 0%,transparent 70%);pointer-events:none}
+.landing-watermark{font-size:10px;letter-spacing:6px;color:#3a5a7a;text-transform:uppercase;margin-bottom:16px;position:relative}
+.landing-title{font-size:clamp(52px,9vw,96px);font-weight:700;color:#e8e0d0;line-height:1.0;margin-bottom:8px;position:relative;letter-spacing:-2px}
+.landing-sub{font-size:clamp(11px,1.8vw,15px);letter-spacing:5px;color:#4fc3f7;text-transform:uppercase;margin-bottom:36px;position:relative}
+.landing-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,#4fc3f760,transparent);margin:0 auto 36px;position:relative}
+.landing-features{display:flex;gap:clamp(16px,3vw,48px);flex-wrap:wrap;justify-content:center;margin-bottom:36px;position:relative}
+.landing-feat{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:140px;max-width:200px}
+.landing-feat-icon{font-size:24px;margin-bottom:2px}
+.landing-feat-title{font-size:13px;font-weight:600;color:#e8e0d0;letter-spacing:1px}
+.landing-feat-desc{font-size:11px;color:#6b7a99;line-height:1.5;text-align:center}
+.landing-disc{font-size:10px;color:#3a4a5a;max-width:480px;line-height:1.6;margin-bottom:36px;position:relative}
+.landing-btn{background:transparent;border:1px solid #4fc3f7;color:#4fc3f7;padding:18px 56px;border-radius:4px;font-size:13px;font-family:Georgia,serif;letter-spacing:4px;text-transform:uppercase;cursor:pointer;position:relative;transition:all .2s}
+.landing-btn:hover{background:#4fc3f715;color:#e8e0d0}
+@keyframes glowPulse{0%{box-shadow:0 0 10px #4fc3f760,0 0 30px #4fc3f730}50%{box-shadow:0 0 25px #4fc3f7cc,0 0 60px #4fc3f780,0 0 100px #4fc3f740}100%{box-shadow:0 0 10px #4fc3f760,0 0 30px #4fc3f730}}
+
+/* MAIN APP */
+#app{display:none}
+.hdr{background:#1a1f2e;border-bottom:1px solid #2a2f3e;padding:16px 24px}
+.hdr-inner{max-width:2000px;margin:0 auto}
+.eyebrow{font-size:10px;letter-spacing:3px;color:#6b7a99;text-transform:uppercase;margin-bottom:5px}
+.hdr-drugs{font-size:14px;font-weight:400;color:#e8e0d0;line-height:1.8;margin-bottom:4px}
+.hdr-sub{font-size:10px;color:#6b7a99;margin-top:2px}
+.drug-link{cursor:pointer;transition:opacity .15s;text-decoration:none}
+.drug-link:hover{opacity:0.65;text-decoration:underline}
+
+/* TABS */
+.tabs{background:#16192a;border-bottom:1px solid #2a2f3e;padding:0 24px;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{height:3px}
+.tabs::-webkit-scrollbar-thumb{background:#2a2f3e}
+.tb{background:none;border:none;border-bottom:3px solid transparent;color:#6b7a99;padding:12px 16px;cursor:pointer;font-size:13px;font-family:Georgia,serif;white-space:nowrap;transition:color .15s}
+.tb.on{border-bottom-color:#4fc3f7;color:#e8e0d0}
+.tb:hover{color:#c8d0e0}
+
+/* CONTENT */
+.cnt{max-width:2000px;margin:0 auto;padding:18px 24px}
+
+/* FILTER */
+.drug-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:12px 16px;background:#1a1f2e;border-radius:8px;border:1px solid #2a2f3e;align-items:center}
+.filter-label{font-size:11px;color:#6b7a99;margin-right:4px;letter-spacing:1px;text-transform:uppercase}
+.df-btn{background:#12151f;border:1px solid #2a2f3e;color:#6b7a99;padding:6px 14px;border-radius:14px;cursor:pointer;font-size:11px;font-family:Georgia,serif;transition:all .15s;white-space:nowrap}
+.df-btn.on{color:#0f1117;font-weight:600}
+.df-btn:hover{border-color:#4fc3f740;color:#c8d0e0}
+
+/* GRID */
+.gg{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))}
+@media(max-width:700px){
+  .gg{grid-template-columns:1fr}
+  .cnt{padding:12px}
+  .hdr{padding:12px 14px}
+  .hdr-drugs{font-size:12px}
+  .eyebrow{font-size:8px}
+  .tb{font-size:11px;padding:10px 12px}
+  .df-btn{font-size:10px;padding:5px 10px}
+  .landing-features{gap:12px}
+  .landing-feat{min-width:120px}
+}
+@media(min-width:701px) and (max-width:1200px){
+  .gg{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+}
+
+/* CARDS */
+.card{background:#1a1f2e;border-radius:10px;overflow:hidden}
+.ch{padding:12px 16px}
+.cb{padding:12px 16px}
+.card-brand{font-size:11px;color:#8892aa;margin-top:2px;letter-spacing:1px}
+.card-class{font-size:9px;text-transform:uppercase;letter-spacing:2px;margin-top:3px}
+.lbl{font-size:9px;color:#6b7a99;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px}
+.bb{margin-top:10px;padding:8px 10px;background:#ff4a4a15;border-radius:6px;border:1px solid #ff4a4a30}
+.bbl{font-size:8px;color:#ff6b6b;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
+.row{display:flex;align-items:flex-start;gap:7px;margin-bottom:5px}
+.dot4{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.t9{font-size:13px;color:#c8d0e0;line-height:1.5}
+.cmp{background:#1a1f2e;border-radius:8px;border:1px solid #2a2f3e;padding:12px 16px;margin-top:14px;overflow-x:auto}
+.mblk{display:flex;gap:10px;margin-bottom:10px;padding:8px 10px;background:#12151f;border-radius:6px;align-items:flex-start}
+.mblk-title{font-size:12px;font-weight:600;margin-bottom:3px}
+.mblk-desc{font-size:12px;color:#c8d0e0;line-height:1.4}
+.drow{margin-bottom:10px;padding:8px 10px;background:#12151f;border-radius:6px}
+.dl{font-size:9px;color:#6b7a99;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
+.dv{font-size:13px;line-height:1.5}
+.se-r{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #2a2f3e}
+.se-name{font-size:13px;color:#c8d0e0}
+.se-note{font-size:10px;color:#6b7a99;margin-top:2px}
+.mon{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.mi{padding:8px 10px;background:#12151f;border-radius:6px;font-size:12px;color:#c8d0e0;line-height:1.5}
+.pr{display:flex;gap:8px;margin-bottom:10px;padding:8px 10px;background:#12151f;border-radius:6px}
+.pr-dot{font-size:10px;flex-shrink:0;margin-top:3px}
+.pr-text{font-size:13px;color:#c8d0e0;line-height:1.6}
+.qcard{max-width:700px;margin:0 auto;background:#1a1f2e;border-radius:10px;border:1px solid #2a2f3e;padding:28px 32px}
+.qbtn{border:1px solid;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:12px;font-family:Georgia,serif;letter-spacing:1px}
+.ablock{background:#1a3a2a;border:1px solid #38a16940;border-radius:8px;padding:12px 16px;margin-bottom:14px}
+.dots{display:flex;gap:3px;align-items:center}
+.d10{width:10px;height:10px;border-radius:50%;display:inline-block}
+.nbn{margin-top:8px;padding:8px 10px;border-radius:6px}
+.nbn-label{font-size:8px;text-transform:uppercase;letter-spacing:2px;margin-bottom:3px}
+.nbn-val{font-size:12px;color:#c8d0e0}
+.spanall{grid-column:1/-1;background:#1a1f2e;border-radius:10px;border:1px solid #2a2f3e;padding:14px 18px}
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:13px;color:#c8d0e0;line-height:1.7}
+.anctable{width:100%;border-collapse:collapse;font-size:11px;margin-top:10px}
+.anctable th{background:#12151f;color:#6b7a99;padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px}
+.anctable td{padding:8px 10px;border-bottom:1px solid #2a2f3e;color:#c8d0e0;vertical-align:top;font-size:12px}
+.anctable tr:nth-child(even) td{background:#161a28}
+.laitbl{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+.laitbl th{background:#12151f;color:#6b7a99;padding:7px 10px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:1px}
+.laitbl td{padding:7px 10px;border-bottom:1px solid #2a2f3e;color:#c8d0e0;vertical-align:top}
+.laitbl tr:nth-child(even) td{background:#161a28}
+.no-lai-card{background:#1a1f2e;border-radius:10px;border:1px solid #2a2f3e40;opacity:0.5}
+.no-lai-header{padding:10px 14px;border-bottom:1px solid #2a2f3e30}
+.no-lai-body{padding:10px 14px;font-size:12px;color:#4a5568;line-height:1.6}
+
+/* DRUG FOCUS OVERLAY */
+.drug-focus-overlay{position:fixed;inset:0;background:#080b10f4;z-index:8000;display:flex;flex-direction:column;overflow-y:auto}
+.drug-focus-header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid #2a2f3e;position:sticky;top:0;background:#080b10;z-index:1}
+.drug-focus-close{background:none;border:1px solid #2a2f3e;color:#6b7a99;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:12px;font-family:Georgia,serif}
+.drug-focus-tabs{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid #2a2f3e;padding:0 24px;background:#080b10;position:sticky;top:57px;z-index:1}
+.dft{background:none;border:none;border-bottom:2px solid transparent;color:#6b7a99;padding:11px 16px;cursor:pointer;font-size:12px;font-family:Georgia,serif;white-space:nowrap}
+.dft.on{color:#e8e0d0;border-bottom-color:#4fc3f7}
+.drug-focus-body{padding:24px;max-width:820px;margin:0 auto;width:100%}
+
+/* EMPTY STATE */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:40px 20px}
+
+@media(max-width:700px){
+  .tg{grid-template-columns:1fr}
+  .mon{grid-template-columns:1fr 1fr}
+  .qcard{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- LANDING PAGE -->
+<div class="landing" id="landing">
+  <div class="landing-watermark">Baseline Mind &amp; Wellness</div>
+  <div class="landing-title">Psych Drug<br>Guide</div>
+  <div class="landing-sub">Antipsychotic Reference</div>
+  <div class="landing-divider"></div>
+  <div class="landing-features">
+    <div class="landing-feat">
+      <div class="landing-feat-icon">💊</div>
+      <div class="landing-feat-title">13 Antipsychotics</div>
+      <div class="landing-feat-desc">SGAs · FGA · First-in-Class Muscarinic · REMS</div>
+    </div>
+    <div class="landing-feat">
+      <div class="landing-feat-icon">💉</div>
+      <div class="landing-feat-title">LAI Dose Converter</div>
+      <div class="landing-feat-desc">Oral to injectable equivalencies across all formulations</div>
+    </div>
+    <div class="landing-feat">
+      <div class="landing-feat-icon">📋</div>
+      <div class="landing-feat-title">Clinical Pearls</div>
+      <div class="landing-feat-desc">Mechanisms · Dosing · Monitoring · Switching strategies</div>
+    </div>
+    <div class="landing-feat">
+      <div class="landing-feat-icon">📖</div>
+      <div class="landing-feat-title">Stahl's Source</div>
+      <div class="landing-feat-desc">Sourced from Stahl's Prescriber's Guide + FDA PI</div>
+    </div>
+  </div>
+  <div class="landing-disc">⚠ For educational and clinical reference purposes only. This tool does not constitute medical advice. Always verify dosing and clinical decisions against current prescribing information and institutional guidelines.</div>
+  <button class="landing-btn" onclick="enterTool()" style="animation:glowPulse 2.5s ease-in-out infinite">Enter Reference Tool</button>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="eyebrow">Psych Drug Guide · Antipsychotic Reference — 13 Agents · Stahl's Prescriber's Guide</div>
+    <div class="hdr-drugs">
+      <span class="drug-link" style="color:#4fc3f7" onclick="openDrugFocus('r')">Risperidone</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#ffb347" onclick="openDrugFocus('z')">Olanzapine</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#7ee8a2" onclick="openDrugFocus('q')">Quetiapine</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#c084fc" onclick="openDrugFocus('a')">Aripiprazole</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#f472b6" onclick="openDrugFocus('c')">Xanomeline/Trospium</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#38bdf8" onclick="openDrugFocus('g')">Ziprasidone</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#fb923c" onclick="openDrugFocus('h')">Haloperidol</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#a3e635" onclick="openDrugFocus('l')">Lurasidone</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#e879f9" onclick="openDrugFocus('cz')">Clozapine</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#34d399" onclick="openDrugFocus('rx')">Brexpiprazole</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#fb7185" onclick="openDrugFocus('lm')">Lumateperone</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#fbbf24" onclick="openDrugFocus('vr')">Cariprazine</span> <span style="color:#2a2f3e">·</span>
+      <span class="drug-link" style="color:#67e8f9" onclick="openDrugFocus('iv')">Paliperidone</span>
+    </div>
+    <div class="hdr-sub">SGAs · FGA · First-in-Class Muscarinic · REMS · Tap any generic name for focused view</div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tb on" onclick="switchTab('overview',this)">Overview</button>
+  <button class="tb" onclick="switchTab('mechanism',this)">Mechanism</button>
+  <button class="tb" onclick="switchTab('dosing',this)">Dosing</button>
+  <button class="tb" onclick="switchTab('anc',this)">ANC / Clozapine Monitor</button>
+  <button class="tb" onclick="switchTab('lais',this)">Long-Acting Injectables</button>
+  <button class="tb" onclick="switchTab('sideEffects',this)">Side Effects</button>
+  <button class="tb" onclick="switchTab('pearls',this)">Clinical Pearls</button>
+  <button class="tb" onclick="switchTab('converter',this)">💉 LAI Converter</button>
+  <button class="tb" onclick="switchTab('quiz',this)">Quiz Me</button>
+</div>
+<div class="cnt" id="cnt"></div>
+</div>
+
+<script>
+var DRUGS={
+  r:{generic:"Risperidone",brand:"Risperdal",color:"#1a6b9e",accent:"#4fc3f7",gen:"SGA",class:"SDA",nbn:"DS-RAn",hasLai:true,
+    fda:["Schizophrenia (adults and ages ≥13)","Acute Mania/Mixed (ages ≥10)","Autism irritability (ages 5–16)","Bipolar maintenance (LAI)"],
+    mech:[{r:"D2 Blockade",e:"↓ Positive symptoms of psychosis",i:"🔴"},{r:"5-HT2A Blockade",e:"↑ Dopamine release → ↓ EPS risk",i:"🟡"},{r:"α1 Blockade",e:"Orthostatic hypotension",i:"🟠"},{r:"H1 Blockade",e:"Mild sedation",i:"🟣"}],
+    dos:{s:"1 mg/day BID",t:"2–6 mg/day",m:"16 mg/day",sw:"EPS risk ↑ above 6 mg/day. No food requirement."},
+    se:[{n:"EPS/Parkinsonism",v:3,nt:"Dose-dependent — risk ↑ >6 mg/day"},{n:"Prolactin Elevation",v:3,nt:"Highest of all SGAs"},{n:"Akathisia",v:2,nt:"Dose-dependent"},{n:"Weight Gain",v:2,nt:"Moderate"},{n:"Metabolic",v:2,nt:"Moderate"},{n:"QTc Prolongation",v:1,nt:"Mild"},{n:"Sedation",v:1,nt:"Mild"}],
+    lais:[{name:"Risperdal Consta",freq:"IM q2wk",notes:"3-week oral overlap required. Deltoid or gluteal."},{name:"Rykindo",freq:"IM q2wk",notes:"1-week oral overlap required. Gluteal only."},{name:"Perseris",freq:"SQ monthly",notes:"No oral overlap needed. Abdomen only. 90 mg (= 3 mg oral) or 120 mg (= 4 mg oral)."},{name:"Uzedy",freq:"SQ monthly or q2mo",notes:"No oral overlap needed. Abdomen or upper arm."}],
+    oral_to_lai:"Consta/Rykindo: oral overlap required. Perseris/Uzedy: no overlap needed.",
+    pearls:["EPS dose-dependent — keep ≤6 mg/day whenever possible","Highest prolactin elevation of all SGAs — monitor for amenorrhea, galactorrhea, gynecomastia, bone density","Oral solution incompatible with cola or tea","Paliperidone (Invega) is active metabolite — NEVER combine with risperidone","LAI therapeutic threshold: ≥20 ng/mL"],
+    bb:"Elderly dementia patients: ↑ mortality risk",source:"Stahl's"},
+  z:{generic:"Olanzapine",brand:"Zyprexa",color:"#7b3f00",accent:"#ffb347",gen:"SGA",class:"SDA",nbn:"DS-RAn",hasLai:true,
+    fda:["Schizophrenia (ages ≥13)","Acute Mania/Mixed (ages ≥13)","Bipolar depression — with fluoxetine (Symbyax)","TRD — with fluoxetine (Symbyax)","Acute agitation (IM)"],
+    mech:[{r:"D2 Blockade",e:"↓ Positive symptoms",i:"🔴"},{r:"5-HT2A Blockade",e:"↑ Dopamine → ↓ EPS",i:"🟡"},{r:"5-HT2C Blockade",e:"↑ Appetite and weight gain",i:"🟢"},{r:"M1 Blockade",e:"Anticholinergic effects, ↑ glucose",i:"🔵"},{r:"H1 Blockade",e:"Significant sedation and weight gain",i:"🟣"},{r:"α1 Blockade",e:"Orthostatic hypotension",i:"🟠"}],
+    dos:{s:"5–10 mg/day",t:"10–20 mg/day",m:"20 mg/day approved",sw:"Therapeutic level: ≥40 ng/mL; futility: >200 ng/mL. No food requirement. Smoking ↓ levels via CYP1A2."},
+    se:[{n:"Weight Gain",v:3,nt:"Highest of all SGAs — manage aggressively"},{n:"Metabolic Syndrome",v:3,nt:"Hyperglycemia, dyslipidemia, DM risk"},{n:"Sedation",v:3,nt:"Significant — can be used therapeutically"},{n:"Anticholinergic Effects",v:2,nt:"Dry mouth, constipation, urinary retention"},{n:"EPS",v:1,nt:"Low"},{n:"QTc Prolongation",v:1,nt:"Minimal"},{n:"Prolactin Elevation",v:1,nt:"Minimal"}],
+    lais:[{name:"Zyprexa Relprevv (olanzapine pamoate)",freq:"IM q2–4wk",notes:"⚠️ POST-INJECTION DELIRIUM SEDATION SYNDROME (PDSS): monitor in registered facility for ≥3 hours after every injection. Cannot be given at home."}],
+    oral_to_lai:"3–4 week down-titration from oral. PDSS 3-hr monitoring required post every injection.",
+    pearls:["Highest weight gain of all SGAs — counsel all patients, consider prophylactic metformin","Relprevv: 3-hr PDSS monitoring required after EVERY injection — registered healthcare facility only","Smoking DECREASES levels via CYP1A2 induction — patients who quit smoking need dose reduction","Symbyax (olanzapine + fluoxetine) approved for bipolar depression and TRD","DRESS syndrome: rare but potentially fatal — fever + rash + lymphadenopathy"],
+    bb:"Elderly dementia: ↑ mortality. Relprevv: post-injection delirium sedation syndrome.",source:"Stahl's"},
+  q:{generic:"Quetiapine",brand:"Seroquel",color:"#1a6b4e",accent:"#7ee8a2",gen:"SGA",class:"DS-MM",nbn:"DS-MM",hasLai:false,
+    fda:["Schizophrenia (adults and ages 13–17)","Bipolar mania (adults and ages 10–17)","Bipolar maintenance (IR and XR)","Bipolar depression (IR and XR)","MDD adjunct (XR only)"],
+    mech:[{r:"D2 Blockade (loose)",e:"↓ Positive symptoms — very low D2 affinity",i:"🔴"},{r:"5-HT2A Blockade",e:"↑ Dopamine → very low EPS risk",i:"🟡"},{r:"5-HT1A Partial Agonism",e:"↑ Cognition and mood",i:"🟢"},{r:"NET Blockade via Norquetiapine",e:"Antidepressant effect — active metabolite (XR)",i:"🔵"},{r:"H1 Blockade",e:"Significant sedation and weight gain",i:"🟣"}],
+    dos:{s:"IR: 25–50 mg BID; XR: 300 mg QHS",t:"400–800 mg/day (psychosis/mania); 300 mg QHS (bipolar depression)",m:"800 mg/day",sw:"Commonly underdosed — 400–800 mg/day needed for antipsychotic effect. At low doses (25–100 mg) acts primarily as sedative via H1 — full class risks without antipsychotic benefit. No food requirement."},
+    se:[{n:"Sedation",v:3,nt:"Significant — use therapeutically if appropriate"},{n:"Orthostatic Hypotension",v:2,nt:"Especially during titration"},{n:"Weight Gain",v:2,nt:"Moderate"},{n:"Metabolic Effects",v:2,nt:"Moderate glucose/lipid effects"},{n:"EPS",v:1,nt:"Very low — preferred SGA in Parkinson's"},{n:"QTc Prolongation",v:1,nt:"Mild"},{n:"Prolactin Elevation",v:1,nt:"None — unique among D2 blockers"}],
+    lais:[],oral_to_lai:"No LAI available for quetiapine. 3–4 week taper required when switching to aripiprazole LAI or haloperidol decanoate.",
+    pearls:["No prolactin elevation — unique among D2-blocking antipsychotics","Preferred SGA for psychosis in Parkinson's disease — very low D2 affinity","Norquetiapine (active metabolite of XR) blocks NET → antidepressant/anxiolytic properties","Commonly underdosed: require 400–800 mg/day for antipsychotic effect","Bipolar depression: 300 mg QHS is standard dose","CYP3A4 substrate — levels ↑ with inhibitors (ketoconazole, grapefruit)"],
+    bb:"Elderly dementia: ↑ mortality",source:"Stahl's"},
+  a:{generic:"Aripiprazole",brand:"Abilify",color:"#6b2d8e",accent:"#c084fc",gen:"SGA",class:"DPA",nbn:"DS-RPA",hasLai:true,
+    fda:["Schizophrenia (adults and ages 13–17)","Acute mania/mixed (adults and ages ≥10)","Bipolar maintenance","MDD adjunct","Autism irritability (ages 6–17)","Tourette's syndrome (ages 6–18)","Acute agitation (IM)"],
+    mech:[{r:"D2/D3 Partial Agonism",e:"Dopamine stabilizer — ↓ when high, ↑ when low",i:"🟣"},{r:"5-HT1A Partial Agonism",e:"↑ Cognition, mood, anxiolytic",i:"🟢"},{r:"5-HT2A Blockade",e:"↑ Dopamine release → ↓ EPS",i:"🟡"},{r:"5-HT2C Blockade",e:"↑ DA/NE → antidepressant augmentation",i:"🔵"},{r:"Minimal H1/α1",e:"Minimal sedation and orthostatic hypotension",i:"🟠"}],
+    dos:{s:"10–15 mg/day (schizophrenia); 2–5 mg/day (MDD adjunct)",t:"15–30 mg/day (schizophrenia); 2–15 mg/day (MDD adjunct)",m:"30 mg/day",sw:"Activating — morning dosing preferred. No food requirement. CYP2D6 and CYP3A4 both affect plasma levels."},
+    se:[{n:"Akathisia",v:3,nt:"Most common SE — treat with propranolol or benzodiazepine"},{n:"Activation/Insomnia",v:2,nt:"Stimulating profile"},{n:"Nausea",v:2,nt:"Especially early in treatment"},{n:"Weight Gain",v:1,nt:"Minimal — lowest metabolic risk of all SGAs"},{n:"EPS",v:1,nt:"Low"},{n:"QTc Prolongation",v:1,nt:"Minimal"},{n:"Prolactin Elevation",v:1,nt:"Reduces prolactin — can reverse hyperprolactinemia"}],
+    lais:[{name:"Abilify Maintena (aripiprazole monohydrate)",freq:"IM q4wk",notes:"14-day oral aripiprazole overlap required. Deltoid or gluteal."},{name:"Abilify Asimtufii (aripiprazole lauroxil)",freq:"IM q8wk",notes:"7-day oral overlap required. Gluteal only."},{name:"Aristada (aripiprazole lauroxil)",freq:"IM monthly/q6wk/q8wk",notes:"21-day oral overlap OR use Aristada Initio same day."},{name:"Aristada Initio (aripiprazole lauroxil)",freq:"Single 675 mg loading dose",notes:"Inject + 30 mg oral aripiprazole same day = no 21-day overlap. Ideal for same-day LAI initiation at discharge."}],
+    oral_to_lai:"Cannot load except via Aristada Initio. Dose reduce for CYP2D6 poor metabolizers or concurrent CYP inhibitors.",
+    pearls:["Only D2 partial agonist — dopamine stabilizer, not pure antagonist","Akathisia is the #1 side effect — propranolol 10–40 mg or lorazepam first line","Can reverse hyperprolactinemia from other antipsychotics at 1–5 mg","Lowest metabolic risk of all SGAs — minimal weight, lipid, glucose effects","Aristada Initio: same-day LAI without 21-day oral overlap — ideal for discharge planning","CYP2D6 AND CYP3A4 affect levels — both inhibitors together require significant dose reduction"],
+    bb:"Elderly dementia: ↑ mortality",source:"Stahl's"},
+  c:{generic:"Xanomeline/Trospium",brand:"Cobenfy",color:"#9d174d",accent:"#f472b6",gen:"1st-in-Class",class:"Muscarinic Agonist",nbn:"M1/M4 Agonist",hasLai:false,
+    fda:["Schizophrenia in adults (FDA approved September 2024)","NOT approved: pediatric patients, bipolar disorder, MDD"],
+    mech:[{r:"M1/M4 Muscarinic Agonism (xanomeline)",e:"Central muscarinic activation → ↓ positive AND negative symptoms",i:"🟢"},{r:"Dopamine/Glutamate Modulation",e:"Indirect modulation — zero D2 blockade",i:"🟣"},{r:"Peripheral Muscarinic Antagonism (trospium)",e:"Trospium blocks GI/cardiac muscarinic SE; does NOT cross blood-brain barrier",i:"🔵"},{r:"Zero D2 Blockade",e:"No EPS, no tardive dyskinesia, no prolactin elevation",i:"⚪"}],
+    dos:{s:"50/20 mg BID × 2 days",t:"100/20 mg BID × 5 days → target 125/30 mg BID",m:"125/30 mg BID",sw:"EMPTY STOMACH REQUIRED — take 1 hour before or 2 hours after meals. Do NOT open or crush capsules. Check LFTs before starting."},
+    se:[{n:"Nausea/Vomiting",v:3,nt:"Most common — empty stomach rule is critical"},{n:"GI Effects",v:3,nt:"Constipation, dyspepsia, GERD"},{n:"Tachycardia",v:2,nt:"Monitor heart rate at baseline and during treatment"},{n:"Hypertension",v:2,nt:"Monitor blood pressure"},{n:"Urinary Retention",v:2,nt:"CONTRAINDICATED if urinary retention present"},{n:"EPS",v:1,nt:"None — no D2 blockade"},{n:"QTc Prolongation",v:1,nt:"None"},{n:"Weight Gain",v:1,nt:"Not clinically significant"}],
+    lais:[],oral_to_lai:"No LAI formulation available. TerXT-LAI prodrug in development.",
+    pearls:["FIRST-IN-CLASS: first antipsychotic approved without any D2 blockade","Xanomeline activates M1/M4 receptors → modulates dopamine/glutamate indirectly","Trospium blocks peripheral muscarinic effects without crossing blood-brain barrier — key design feature","No EPS, no tardive dyskinesia, no prolactin elevation, no significant weight gain","CONTRAINDICATED: urinary retention, moderate-severe hepatic impairment, gastric retention, narrow-angle glaucoma","Check LFTs and bilirubin BEFORE initiating treatment","Source: FDA Prescribing Information 2024 (EMERGENT-2 and EMERGENT-3 trials)"],
+    bb:"Elderly dementia: ↑ mortality (class). Urinary retention — caution in BPH.",source:"FDA PI 2024"},
+  g:{generic:"Ziprasidone",brand:"Geodon",color:"#0c4a6e",accent:"#38bdf8",gen:"SGA",class:"SDA + NE/5-HT RI",nbn:"DS-RAn",hasLai:false,
+    fda:["Schizophrenia (oral and IM)","Delaying relapse in schizophrenia","Acute mania/mixed episodes","Bipolar maintenance","Acute agitation (IM)"],
+    mech:[{r:"D2 Blockade",e:"↓ Positive symptoms of psychosis",i:"🔴"},{r:"5-HT2A Blockade",e:"↑ Dopamine → ↓ EPS risk",i:"🟡"},{r:"5-HT1A Partial Agonism",e:"↑ Mood and cognition",i:"🟢"},{r:"Serotonin/NE Reuptake Inhibition",e:"Antidepressant-like properties at higher doses",i:"🔵"},{r:"Minimal H1/M1/α1",e:"Minimal sedation, weight gain, anticholinergic effects",i:"🟣"}],
+    dos:{s:"20–40 mg BID (schizophrenia); 40 mg BID (bipolar mania)",t:"60–80 mg BID; best clinical efficacy seen at >120 mg/day",m:"160 mg/day approved; some patients require up to 320 mg/day",sw:"WITH FOOD — at least 500 calories REQUIRED (doubles bioavailability). Low doses paradoxically activating — raise dose if this occurs. Often underdosed in practice."},
+    se:[{n:"QTc Prolongation",v:3,nt:"NOT dose-dependent — risk often overstated clinically"},{n:"Activation/Akathisia",v:2,nt:"At low doses — raise dose to resolve"},{n:"Sedation",v:2,nt:"At higher doses"},{n:"Nausea",v:2,nt:"Especially without food"},{n:"EPS",v:1,nt:"Low"},{n:"Weight Gain",v:1,nt:"Minimal — among best metabolic profiles"},{n:"Prolactin Elevation",v:1,nt:"Minimal"}],
+    lais:[],oral_to_lai:"No LAI available for ziprasidone. 1-week taper required when switching FROM ziprasidone to aripiprazole LAI.",
+    pearls:["MUST take with food — at least 500 calories. Without food, bioavailability is roughly halved.","QTc prolongation is NOT dose-dependent and NOT significantly affected by CYP inhibitors — the fear is often clinically overstated","CONTRAINDICATED: history of QTc prolongation, recent MI, uncompensated heart failure, concurrent QTc-prolonging agents","Best metabolic profile among classic SGAs — minimal weight, glucose, lipid effects","Often underdosed in clinical practice: best efficacy seen at >120 mg/day","Check baseline EKG, potassium, and magnesium before starting"],
+    bb:"Elderly dementia: ↑ mortality. QTc prolongation — contraindicated in cardiac risk.",source:"Stahl's"},
+  h:{generic:"Haloperidol",brand:"Haldol",color:"#78350f",accent:"#fb923c",gen:"FGA",class:"Conventional (FGA)",nbn:"D-RAn",hasLai:true,
+    fda:["Psychotic disorders","Tourette's syndrome","Severe behavioral problems in children (second-line)","Prolonged parenteral therapy (decanoate)","Bipolar disorder","Delirium (with lorazepam)"],
+    mech:[{r:"High-Potency D2 Blockade",e:"Most potent D2 antagonist of all 13 agents",i:"🔴"},{r:"No 5-HT2A Modulation",e:"Absence of serotonin protection = maximum EPS and TD risk",i:"⚫"},{r:"α1 Blockade (mild)",e:"Some orthostatic hypotension",i:"🟠"},{r:"No H1/M1 Blockade",e:"Minimal sedation, weight gain, anticholinergic effects",i:"🟣"}],
+    dos:{s:"Oral: 1–15 mg/day; Acute IM: 2–5 mg/dose",t:"Oral: 1–40 mg/day; most patients respond to 2–8 mg/day",m:"Up to 100 mg/day oral (rarely justified)",sw:"Commonly overdosed — ~2 mg/day may match atypical antipsychotic efficacy. High doses worsen negative symptoms. No food requirement."},
+    se:[{n:"EPS/Drug-Induced Parkinsonism",v:3,nt:"Highest of all 13 agents — no 5-HT2A protection"},{n:"Tardive Dyskinesia",v:3,nt:"Highest risk of all agents — cumulative dose dependent"},{n:"Akathisia",v:3,nt:"Very common"},{n:"Prolactin Elevation",v:3,nt:"High"},{n:"NMS",v:2,nt:"Rare but life-threatening"},{n:"QTc Prolongation",v:2,nt:"↑ at high doses and IV administration"},{n:"Sedation",v:1,nt:"Less than low-potency FGAs"}],
+    lais:[{name:"Haldol Decanoate (haloperidol decanoate)",freq:"IM q4wk",notes:"Dose = 10–20× previous daily oral dose. Loading: 300 mg q1–2wk × 2 doses → check plasma before 3rd. Therapeutic: ≥5 ng/mL; futility: >30 ng/mL. Sesame oil vehicle — ask about allergy."}],
+    oral_to_lai:"Loading: 300 mg q1–2wk × 2 doses. Check plasma level before 3rd dose. Therapeutic threshold: ≥5 ng/mL; futility: >30 ng/mL.",
+    pearls:["Only FGA in this reference — pure high-potency D2 antagonist with NO 5-HT2A modulation","Highest EPS and tardive dyskinesia risk of all 13 agents","Commonly overdosed: ~2 mg/day may match atypical antipsychotic efficacy for most patients","High doses worsen negative symptoms (neuroleptic-induced deficit syndrome)","Delirium combination: haloperidol dose = 2× the lorazepam dose (e.g., Haldol 2 mg + Ativan 1 mg IM)","CONTRAINDICATED in Parkinson's disease and Lewy body dementia","Decanoate: therapeutic ≥5 ng/mL; futility >30 ng/mL — plasma monitoring guides dosing","Haloperidol + lithium: rare NMS-like encephalopathic syndrome — monitor closely"],
+    bb:"Elderly dementia: ↑ mortality. Highest EPS/TD of all agents. Absolutely contraindicated in Parkinson's disease.",source:"Stahl's"},
+  l:{generic:"Lurasidone",brand:"Latuda",color:"#3a5a1c",accent:"#a3e635",gen:"SGA",class:"SDA + 5-HT7/α2 Antagonist",nbn:"DS-RAn",hasLai:false,
+    fda:["Schizophrenia (adults and ages 13–17)","Bipolar I depression — monotherapy (adults and ages ≥10)","Bipolar I depression — adjunct to lithium or valproate (adults)"],
+    mech:[{r:"D2 Blockade",e:"↓ Positive symptoms of psychosis",i:"🔴"},{r:"5-HT2A Blockade",e:"↑ Dopamine → ↓ EPS risk",i:"🟡"},{r:"5-HT7 Antagonism (potent)",e:"↑ Mood, cognition, sleep — unique mechanism among SGAs",i:"🟢"},{r:"5-HT1A Partial Agonism",e:"↑ Mood, anxiety reduction, cognition",i:"🔵"},{r:"α2A/α2C Antagonism",e:"↑ NE/DA release → antidepressant and pro-cognitive",i:"🟠"},{r:"Minimal H1/M1",e:"Minimal sedation, weight gain, anticholinergic effects",i:"🟣"}],
+    dos:{s:"Schizophrenia: 40 mg QD; Bipolar depression: 20 mg QD",t:"Schizophrenia: 40–160 mg/day; Bipolar depression: 20–60 mg/day",m:"Schizophrenia: 160 mg/day; Bipolar depression: 120 mg/day",sw:"WITH FOOD — at least 350 calories required (absorption ↓ up to 50% without food). Bedtime dosing strongly recommended to ↓ akathisia and sedation. Strong CYP3A4 inhibitors and inducers are CONTRAINDICATED."},
+    se:[{n:"Akathisia",v:2,nt:"Dose-dependent — significantly ↓ with bedtime dosing"},{n:"Sedation",v:2,nt:"Dose-dependent — significantly ↓ with bedtime dosing"},{n:"Nausea",v:2,nt:"Common early — usually resolves"},{n:"EPS",v:1,nt:"Low — ↓ further with bedtime dosing"},{n:"Prolactin Elevation",v:1,nt:"Low and transient"},{n:"Weight Gain",v:1,nt:"Metabolically neutral — slight weight loss long-term"},{n:"Metabolic Effects",v:1,nt:"Neutral — triglycerides, glucose similar to placebo"},{n:"QTc Prolongation",v:1,nt:"No QTc warning — only SGA with this distinction"}],
+    lais:[],oral_to_lai:"No LAI available for lurasidone. 1-week taper required when switching FROM lurasidone.",
+    pearls:["Only SGA with NO QTc prolongation warning — documented not to cause QTc prolongation","MUST take with food — at least 350 calories. Absorption decreases up to 50% without food.","Bedtime dosing with evening meal strongly recommended — significantly ↓ daytime akathisia, sedation, parkinsonism","Most metabolically neutral SGA: neutral weight, triglycerides, glucose, cholesterol","Potent 5-HT7 antagonism — unique among SGAs; contributes to antidepressant and pro-cognitive properties","CONTRAINDICATED with strong CYP3A4 inhibitors (ketoconazole) and inducers (rifampin, carbamazepine)","Bipolar depression: start 20 mg/day; 20–60 mg/day usually adequate; max 120 mg/day"],
+    bb:"Elderly dementia: ↑ mortality",source:"Stahl's"},
+  cz:{generic:"Clozapine",brand:"Clozaril",color:"#581c87",accent:"#e879f9",gen:"SGA",class:"DSN-RAn — REMS Required",nbn:"DSN-RAn",hasLai:false,
+    fda:["Treatment-resistant schizophrenia (ONLY FDA-approved drug for TRS)","Reduction of recurrent suicidal behavior in schizophrenia or schizoaffective disorder"],
+    mech:[{r:"D2 Blockade (loose affinity)",e:"Lower D2 binding affinity than most SGAs — explains low EPS despite high antipsychotic potency",i:"🔴"},{r:"5-HT2A Blockade (potent)",e:"↑ Dopamine → ↓ EPS, ↑ cognition; contributes to TRS efficacy",i:"🟡"},{r:"5-HT2C Blockade",e:"↑ Appetite and weight gain; mood effects",i:"🟢"},{r:"M1 Blockade (potent)",e:"Significant anticholinergic — constipation risk, urinary retention, sialorrhea paradox",i:"🔵"},{r:"H1 Blockade (potent)",e:"Significant sedation and weight gain",i:"🟣"},{r:"α1/α2 Blockade + NE Reuptake Inhibition",e:"Orthostatic hypotension; antidepressant and pro-cognitive properties",i:"🟠"}],
+    dos:{s:"25 mg at bedtime; increase 25–50 mg every 48–72 hours as tolerated",t:"Guided by TROUGH PLASMA LEVEL — therapeutic threshold ≥350 ng/mL",m:">500 mg/day requires split dosing; >700 ng/mL often not tolerated; no evidence supporting >1000 ng/mL",sw:"PLASMA LEVEL-GUIDED DOSING — not based on mg/day. Obtain trough level at 200 mg bedtime. Baseline ANC ≥1500/µL required. REMS enrollment mandatory before prescribing."},
+    se:[{n:"Sedation",v:3,nt:"Frequent and significant — take at bedtime"},{n:"Weight Gain",v:3,nt:"Significant — manage aggressively from day 1"},{n:"Sialorrhea (hypersalivation)",v:3,nt:"Very common — atropine 1% drops or ipratropium 0.06% spray sublingually"},{n:"Constipation/Paralytic Ileus",v:3,nt:"⚠️ Life-threatening risk — all patients need docusate 250 mg at initiation"},{n:"Severe Neutropenia",v:3,nt:"⚠️ REMS mandatory ANC monitoring"},{n:"Tachycardia",v:2,nt:"Common — treat with atenolol 12.5 mg if resting HR >100"},{n:"Myocarditis",v:2,nt:"⚠️ First 6 weeks ONLY — weekly troponin + CRP"},{n:"Seizures",v:2,nt:"Dose-dependent — treat with valproate if occurs"}],
+    lais:[],oral_to_lai:"No LAI formulation available for clozapine. ALWAYS requires 4+ week taper when switching FROM clozapine — abrupt discontinuation can cause rebound psychosis.",
+    pearls:["ONLY FDA-approved drug for treatment-resistant schizophrenia — 50–60% response in TRS vs 0–9% for other atypical antipsychotics","ONLY FDA-approved for reduction of recurrent suicidal behavior in schizophrenia/schizoaffective disorder","REMS program: prescribers, pharmacies, AND patients must all be enrolled — prescriptions tied to ANC results","Plasma level-guided dosing: therapeutic trough ≥350 ng/mL — not dose-based","Start docusate 250 mg for ALL patients at initiation — paralytic ileus can be fatal","Sialorrhea: atropine 1% drops 1–3 drops sublingually at bedtime OR ipratropium 0.06% spray 1–3 sprays intra-orally","Myocarditis occurs ONLY in first 6 weeks — weekly troponin I/T + CRP for first month; stop if troponin ≥2× ULN or CRP >100 mg/L","Smoking DECREASES clozapine levels via CYP1A2 induction — quitting smoking may cause toxic plasma level rise","Preferred for Parkinson's disease psychosis (lowest D2 affinity of any SGA)"],
+    bb:"⚠️ MULTIPLE BLACK BOX WARNINGS: (1) Severe neutropenia/agranulocytosis — REMS mandatory. (2) Seizures — dose-dependent. (3) Myocarditis — first 6 weeks. (4) Orthostatic hypotension/bradycardia/syncope. (5) Elderly dementia: ↑ mortality.",source:"Stahl's"},
+  rx:{generic:"Brexpiprazole",brand:"Rexulti",color:"#065f46",accent:"#34d399",gen:"SGA",class:"DPA (3rd-Gen)",nbn:"DS-RPA",hasLai:false,
+    fda:["Schizophrenia (adults and ages 13–17)","MDD adjunct (adults)","Agitation associated with Alzheimer dementia (adults)"],
+    mech:[{r:"D2/D3 Partial Agonism (lower intrinsic activity vs aripiprazole)",e:"Dopamine stabilizer — less activating than aripiprazole",i:"🟣"},{r:"5-HT1A Partial Agonism (more potent relative to D2 vs aripiprazole)",e:"↑ Cognition, mood — may ↓ akathisia vs aripiprazole",i:"🟢"},{r:"5-HT2A Blockade (more potent relative to D2 vs aripiprazole)",e:"↑ Dopamine → ↓ EPS risk",i:"🟡"},{r:"5-HT7 Blockade",e:"↑ Mood and cognition — shared with lurasidone",i:"🔵"},{r:"α1B Blockade",e:"↓ Hyperarousal symptoms — PTSD and Alzheimer agitation",i:"🟠"},{r:"α2C Blockade",e:"↑ NE/DA → antidepressant augmentation",i:"🟤"}],
+    dos:{s:"Schizophrenia: 1 mg/day days 1–4 → 2 mg/day days 5–7 → 4 mg/day day 8; MDD adjunct: 0.5–1 mg/day; Alzheimer agitation: 0.5 mg/day days 1–7 → 1 mg days 8–14 → 2 mg day 15",t:"Schizophrenia: 2–4 mg/day; MDD adjunct: 2 mg/day; Alzheimer agitation: 2 mg/day",m:"Schizophrenia: 4 mg/day; MDD adjunct: 3 mg/day; Alzheimer agitation: 3 mg/day",sw:"Once daily. No food requirement. Long half-life (~91 hours) — abrupt discontinuation less likely to cause rebound psychosis than most antipsychotics."},
+    se:[{n:"Akathisia",v:2,nt:"Dose-dependent — theoretically less than aripiprazole per receptor profile"},{n:"Weight Gain",v:2,nt:"More than aripiprazole — clinically relevant distinction"},{n:"Impulse Control Problems",v:2,nt:"⚠️ Compulsive gambling, binge eating, hypersexuality — counsel all patients"},{n:"Sedation",v:1,nt:"Occurs in significant minority"},{n:"EPS",v:1,nt:"Low"},{n:"QTc Prolongation",v:1,nt:"Minimal"},{n:"Prolactin Elevation",v:1,nt:"Minimal"}],
+    lais:[],oral_to_lai:"No LAI formulation available. Immediate stop acceptable when switching FROM brexpiprazole due to long half-life (~91 hours).",
+    pearls:["Third-generation D2 partial agonist — same class as aripiprazole but with more potent 5-HT1A/5-HT2A/α1 binding relative to D2, and lower intrinsic D2 activity","Theoretically less akathisia and activation than aripiprazole — no head-to-head trials confirm this","More weight gain than aripiprazole — important distinction when choosing between these two partial agonists","FDA-approved for Alzheimer dementia agitation — NOT for PRN use; must be dosed regularly","Shown efficacy in combination with sertraline for PTSD (α1B and α2C blockade reduce hyperarousal)","Impulse control warning: compulsive gambling, shopping, binge eating, hypersexuality — counsel and monitor; reduce dose or stop if develops","CYP2D6 + CYP3A4: either inhibitor alone → half the usual dose; both inhibitors together → quarter dose; CYP3A4 inducer → double dose","Half-life ~91 hours — longest of oral antipsychotics in this reference"],
+    bb:"Elderly dementia: ↑ mortality. Impulse control problems — monitor all patients.",source:"Stahl's"},
+  lm:{generic:"Lumateperone",brand:"Caplyta",color:"#9f1239",accent:"#fb7185",gen:"SGA",class:"Multimodal D1/D2/5-HT2A/SERT",nbn:"DS-RAn (multimodal)",hasLai:false,
+    fda:["Schizophrenia (adults)","Bipolar depression — monotherapy (adults)","Bipolar depression — adjunct to lithium or valproate (adults)"],
+    mech:[{r:"D2 Blockade (postsynaptic)",e:"↓ Positive symptoms of psychosis",i:"🔴"},{r:"D2 Partial Agonism (presynaptic)",e:"Presynaptic partial agonism — unique dual D2 mechanism",i:"🟠"},{r:"5-HT2A Blockade",e:"↑ Dopamine → ↓ EPS risk, ↑ cognition",i:"🟡"},{r:"D1 Agonism → AMPA/mTOR Pathway",e:"D1-dependent AMPA activation → mTOR → antidepressant mechanism unique to lumateperone",i:"🟢"},{r:"SERT Inhibition",e:"Serotonin reuptake inhibition — SSRI-like antidepressant property",i:"🔵"},{r:"Minimal H1/M1/α1",e:"Minimal sedation, weight gain, anticholinergic, orthostasis",i:"🟣"}],
+    dos:{s:"42 mg once daily — NO titration required",t:"42 mg once daily (only dose available — fixed)",m:"42 mg once daily (no dose adjustment possible)",sw:"FIXED DOSE — 42 mg is the only available dose. No titration needed. Evening dosing recommended to reduce daytime sedation. No food requirement."},
+    se:[{n:"Sedation/Somnolence",v:2,nt:"Evening dosing significantly reduces daytime sedation"},{n:"Nausea",v:2,nt:"Common, especially early in treatment"},{n:"Dry Mouth",v:1,nt:"Mild"},{n:"EPS",v:1,nt:"Low"},{n:"Akathisia",v:1,nt:"Low"},{n:"Weight Gain",v:1,nt:"Metabolically neutral"},{n:"Metabolic Effects",v:1,nt:"Neutral"},{n:"QTc Prolongation",v:1,nt:"Minimal"}],
+    lais:[],oral_to_lai:"No LAI formulation available. Immediate stop acceptable when switching FROM lumateperone.",
+    pearls:["FIXED DOSE: 42 mg once daily — no titration, simplest dosing of all 13 agents","Unique D1 agonism → AMPA receptor activation → mTOR pathway — antidepressant mechanism not shared by any other drug in this reference","SERT inhibition adds SSRI-like antidepressant property on top of D2/5-HT2A mechanism","Both bipolar depression indications (monotherapy AND adjunct) approved — adults only","AVOID with CYP3A4 inhibitors (fluvoxamine, nefazodone, grapefruit), CYP3A4 inducers (carbamazepine, phenytoin, St. John's wort), AND UGT inhibitors (valproate) — triple drug interaction concern","Not recommended in moderate to severe hepatic impairment","Alzheimer agitation trial discontinued — not FDA-approved for this (contrast with brexpiprazole which IS approved)","Pro-social effects noted clinically: improved interpersonal relations, less isolation, more engagement in daily activities"],
+    bb:"Elderly dementia: ↑ mortality",source:"Stahl's"},
+  vr:{generic:"Cariprazine",brand:"Vraylar",color:"#92400e",accent:"#fbbf24",gen:"SGA",class:"DPA (3rd-Gen) + D3 Preferring",nbn:"DS-RPA",hasLai:false,
+    fda:["Schizophrenia (adults — acute and maintenance)","Acute bipolar mania/mixed mania (adults)","Bipolar I depression — monotherapy (adults)","MDD adjunct (adults)"],
+    mech:[{r:"D2/D3 Partial Agonism — D3 Preferring at low doses",e:"Most potent functional D3 partial agonist in vivo of any antipsychotic",i:"🟣"},{r:"5-HT1A Partial Agonism",e:"↑ Cognition, mood, anxiolytic effects",i:"🟢"},{r:"5-HT2A Blockade",e:"↑ Dopamine → ↓ EPS risk, ↑ cognition",i:"🟡"},{r:"D3 → Prefrontal Dopamine Release",e:"D3 partial agonism in VTA/SN → ↑ prefrontal DA → ↑ cognition and negative symptoms",i:"🔵"},{r:"Minimal H1/α1",e:"Minimal sedation, weight gain, orthostatic hypotension",i:"🟠"}],
+    dos:{s:"Schizophrenia/mania: 1.5 mg/day day 1, ↑ to 3 mg on day 2; Bipolar depression/MDD adjunct: 1.5 mg/day × 14 days, may ↑ to 3 mg on day 15",t:"Schizophrenia: 1.5–6 mg/day; Bipolar mania: 3–6 mg/day; Bipolar depression: 1.5–3 mg/day; MDD adjunct: 1.5–3 mg/day",m:"Schizophrenia/mania: 6 mg/day approved (studied to 12 mg/day off-label); Bipolar depression/MDD: 3 mg/day",sw:"Once daily. No food requirement. Active metabolite DDCAR has half-life of 1–3 WEEKS — adverse effects may appear weeks after dose changes as drug accumulates. Monitor for weeks after any titration."},
+    se:[{n:"Akathisia",v:3,nt:"Most common SE — dose-dependent; slow titration in bipolar depression significantly ↓ risk"},{n:"EPS/Restlessness",v:2,nt:"Dose-dependent"},{n:"Nausea/GI Distress",v:2,nt:"Especially early in treatment"},{n:"Sedation",v:1,nt:"Occurs in minority of patients"},{n:"Weight Gain",v:1,nt:"Minimal — neutral metabolic profile"},{n:"Metabolic Effects",v:1,nt:"Neutral — triglycerides and glucose similar to placebo"},{n:"QTc Prolongation",v:1,nt:"Minimal"},{n:"Prolactin Elevation",v:1,nt:"Minimal — partial agonism reduces elevation"}],
+    lais:[],oral_to_lai:"No LAI formulation available. Immediate stop acceptable when switching FROM cariprazine — DDCAR active metabolite half-life 1–3 weeks means drug persists for weeks after stopping.",
+    pearls:["ONLY antipsychotic with functional D3 partial agonism in vivo — D3 preferring at low doses","D3 partial agonism in VTA/SN → ↑ prefrontal dopamine → ↑ cognition, mood, negative symptoms","Approved in Europe specifically for NEGATIVE SYMPTOMS of schizophrenia — not yet FDA-approved for this indication in the US","DDCAR active metabolite half-life 1–3 WEEKS — adverse effects may appear weeks after dose increases; also means missed doses are less clinically impactful","Dose by indication: bipolar depression 1.5–3 mg/day (lower); mania/schizophrenia 3–6 mg/day (higher)","Slow titration in bipolar depression (1.5 mg/day × 14 days before increasing) significantly reduces akathisia","CYP3A4 inhibitor + stable cariprazine: reduce current dose by half. Starting with inhibitor present: 1.5 mg day 1, skip day 2, 1.5 mg days 3–4, max 3 mg/day"],
+    bb:"Elderly dementia: ↑ mortality",source:"Stahl's"},
+  iv:{generic:"Paliperidone",brand:"Invega",color:"#164e63",accent:"#67e8f9",gen:"SGA",class:"SDA",nbn:"DS-RAn",hasLai:true,
+    fda:["Schizophrenia — adults (oral and LAI) and ages 12–17 (oral only)","Schizoaffective disorder — adults (oral and Sustenna LAI)","NOT approved: bipolar depression, MDD adjunct"],
+    mech:[{r:"D2 Blockade",e:"↓ Positive symptoms of psychosis",i:"🔴"},{r:"5-HT2A Blockade",e:"↑ Dopamine → ↓ EPS risk, ↑ cognition",i:"🟡"},{r:"α1 Blockade",e:"Orthostatic hypotension",i:"🟠"},{r:"H1 Blockade (mild)",e:"Mild sedation",i:"🟣"},{r:"NOT metabolized by CYP enzymes",e:"Renally cleared — unique pharmacokinetic profile; no significant CYP drug interactions",i:"⚪"}],
+    dos:{s:"Oral: 6 mg/day once daily (OROS — no titration required); Sustenna loading: 234 mg IM day 1 + 156 mg IM day 8 (both deltoid injections)",t:"Oral: 6 mg/day (range 3–12 mg/day); Sustenna maintenance: 117 mg/month (range 39–234 mg/month)",m:"Oral: 12 mg/day; Sustenna: 234 mg/month; Trinza: 819 mg/3 months; Hafyera: 1560 mg/6 months",sw:"OROS tablet — do NOT crush or chew (destroys controlled-release mechanism; empty ghost tablet in stool is normal). No food requirement. No oral overlap needed with Sustenna — can be fully loaded. No taper required when switching FROM paliperidone ER."},
+    se:[{n:"Prolactin Elevation",v:3,nt:"Second highest of all SGAs — monitor for amenorrhea, galactorrhea, osteoporosis in low-estrogen women"},{n:"EPS/Parkinsonism",v:2,nt:"Dose-dependent"},{n:"Akathisia",v:2,nt:"Dose-dependent"},{n:"Weight Gain",v:2,nt:"Moderate — dose-dependent"},{n:"QTc Prolongation",v:2,nt:"Prolongs more than some SGAs — contraindicated with QTc-prolonging agents"},{n:"Sedation",v:2,nt:"Can be significant"},{n:"Tachycardia",v:1,nt:"Common"},{n:"Metabolic Effects",v:1,nt:"Moderate"}],
+    lais:[{name:"Invega Sustenna (paliperidone palmitate 1-month)",freq:"IM q4wk — deltoid or gluteal",notes:"Loading: 234 mg day 1 + 156 mg day 8 (BOTH deltoid). NO oral overlap needed. Maintenance starts 4 weeks after 2nd loading dose. CAN be loaded — no oral coverage required."},{name:"Invega Trinza (paliperidone palmitate 3-month)",freq:"IM q3mo — deltoid or gluteal",notes:"Requires ≥4 months on Sustenna first. Last 2 Sustenna doses should be same strength. Initiate when next Sustenna dose is scheduled."},{name:"Invega Hafyera (paliperidone palmitate 6-month)",freq:"IM q6mo — GLUTEAL ONLY",notes:"Requires ≥4 months on Sustenna OR ≥1 Trinza cycle. Gluteal injection ONLY. 1092 mg or 1560 mg only."}],
+    oral_to_lai:"Sustenna: 234 mg day 1 + 156 mg day 8 (both deltoid). NO oral overlap needed. Therapeutic threshold: ≥28 ng/mL; futility: 112 ng/mL.",
+    pearls:["Active metabolite of risperidone (9-OH-risperidone) — NEVER combine with risperidone (same active drug, compounded side effects)","Unique pharmacokinetics: NOT metabolized by CYP enzymes — renally cleared. No significant CYP drug interactions.","Renal dosing required: mild impairment max 6 mg/day; moderate max 3 mg/day; severe initial 1.5 mg/day max 3 mg/day","Most robust LAI program of any SGA: 1-month (Sustenna), 3-month (Trinza), 6-month (Hafyera)","Sustenna loading protocol: 234 mg day 1 + 156 mg day 8 (both deltoid) — NO oral overlap needed","Sustenna → Trinza equivalence: 78→273 mg, 117→410 mg, 156→546 mg, 234→819 mg","Trinza/Sustenna → Hafyera: Sustenna 156 mg → 1092 mg; Sustenna 234 mg → 1560 mg","OROS tablet technology — do NOT crush; ghost tablet in stool is normal and expected","Plasma level thresholds: therapeutic ≥28 ng/mL; futility 112 ng/mL","Second highest prolactin of all SGAs — monitor for amenorrhea, galactorrhea, bone density","QTc prolongs more than some SGAs — contraindicated with pimozide, thioridazine, selected antiarrhythmics"],
+    bb:"Elderly dementia: ↑ mortality. QTc prolongation — contraindicated with QTc-prolonging agents.",source:"Stahl's"}
+};
+
+var ALL_KEYS=['r','z','q','a','c','g','h','l','cz','rx','lm','vr','iv'];
+var selectedKeys=[];
+var tab='overview',qi=0,sa=false;
+var AC={Risperidone:"#4fc3f7",Olanzapine:"#ffb347",Quetiapine:"#7ee8a2",Aripiprazole:"#c084fc","Xanomeline/Trospium":"#f472b6",Ziprasidone:"#38bdf8",Haloperidol:"#fb923c",Lurasidone:"#a3e635",Clozapine:"#e879f9",Brexpiprazole:"#34d399",Lumateperone:"#fb7185",Cariprazine:"#fbbf24",Paliperidone:"#67e8f9"};
+
+function dots(v){return [1,2,3].map(i=>{var c=i<=v?(v===3?'#e53e3e':v===2?'#dd6b20':'#38a169'):'#2a2f3e';return '<span class="d10" style="background:'+c+'"></span>';}).join('');}
+function badge(d){
+  if(d.brand==='Clozaril') return ' <span style="display:inline-block;font-size:8px;color:#ef4444;background:#ef444420;border:1px solid #ef444440;border-radius:7px;padding:2px 6px;letter-spacing:1px;vertical-align:middle">REMS</span>';
+  if(d.gen==='FGA') return ' <span style="display:inline-block;font-size:8px;color:#f87171;background:#f8717120;border:1px solid #f8717140;border-radius:7px;padding:2px 6px;letter-spacing:1px;vertical-align:middle">FGA</span>';
+  if(d.gen==='1st-in-Class') return ' <span style="display:inline-block;font-size:8px;color:#fbbf24;background:#fbbf2420;border:1px solid #fbbf2440;border-radius:7px;padding:2px 6px;letter-spacing:1px;vertical-align:middle">2024</span>';
+  return '';
+}
+function srcbadge(s){return s==="Stahl's"?' <span style="display:inline-block;font-size:8px;color:#7ee8a2;background:#7ee8a220;border:1px solid #7ee8a240;border-radius:7px;padding:2px 6px;letter-spacing:1px;vertical-align:middle">Stahl\'s</span>':' <span style="display:inline-block;font-size:8px;color:#fbbf24;background:#fbbf2420;border:1px solid #fbbf2440;border-radius:7px;padding:2px 6px;letter-spacing:1px;vertical-align:middle">FDA PI</span>';}
+
+function filterBar(){
+  return '<div class="drug-filter"><span class="filter-label">Filter:</span>'+
+    ALL_KEYS.map(k=>{var d=DRUGS[k];var on=selectedKeys.includes(k);
+      return '<button class="df-btn'+(on?' on':'')+'" style="'+(on?'background:'+d.color+';border-color:'+d.accent+';color:#fff':'')+'" onclick="toggleDrug(\''+k+'\')">'+d.generic+'</button>';}).join('')+
+    '<button class="df-btn" onclick="selectAll()" style="margin-left:8px;color:#4fc3f7;border-color:#4fc3f740">All</button>'+
+    '<button class="df-btn" onclick="clearAll()" style="margin-left:4px;color:#6b7a99;border-color:#2a2f3e">Clear</button></div>';
+}
+function toggleDrug(k){if(selectedKeys.includes(k)){selectedKeys=selectedKeys.filter(x=>x!==k);}else selectedKeys.push(k);render();}
+function selectAll(){selectedKeys=[...ALL_KEYS];render();}
+function clearAll(){selectedKeys=[];render();}
+function getDA(){return selectedKeys.map(k=>DRUGS[k]);}
+
+// DRUG FOCUS OVERLAY
+var focusKey=null,focusTab='overview';
+var FOCUS_TABS=[['overview','Overview'],['mechanism','Mechanism'],['dosing','Dosing'],['side_effects','Side Effects'],['clinical_pearls','Clinical Pearls']];
+function openDrugFocus(k){focusKey=k;focusTab='overview';renderFocus();}
+function closeFocus(){var el=document.getElementById('drug-focus');if(el)el.remove();}
+function switchFocusTab(t){focusTab=t;renderFocus();}
+function renderFocus(){
+  var ex=document.getElementById('drug-focus');if(ex)ex.remove();
+  var d=DRUGS[focusKey];if(!d)return;
+  var overlay=document.createElement('div');
+  overlay.id='drug-focus';overlay.className='drug-focus-overlay';
+  var tabsHtml=FOCUS_TABS.map(function(t){return '<button class="dft'+(focusTab===t[0]?' on':'')+'" onclick="switchFocusTab(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');
+  var b='';
+  if(focusTab==='overview'){
+    b='<div style="margin-bottom:18px"><div class="lbl" style="margin-bottom:10px">FDA Indications</div>'+
+      d.fda.map(function(f){return '<div style="display:flex;gap:10px;margin-bottom:10px;padding:12px 14px;background:#12151f;border-radius:8px"><span style="color:'+d.accent+';flex-shrink:0;margin-top:2px">◆</span><span style="font-size:14px;color:#c8d0e0;line-height:1.6">'+f+'</span></div>';}).join('')+'</div>'+
+      '<div class="bb"><div class="bbl">⚠ Warning</div><div style="font-size:14px;color:#c8d0e0;line-height:1.6">'+d.bb+'</div></div>';
+  } else if(focusTab==='mechanism'){
+    b=d.mech.map(function(m){return '<div class="mblk"><span style="font-size:22px;flex-shrink:0">'+m.i+'</span><div><div class="mblk-title" style="color:'+d.accent+'">'+m.r+'</div><div class="mblk-desc">'+m.e+'</div></div></div>';}).join('')+
+      '<div class="nbn" style="background:'+d.color+'20;border:1px solid '+d.color+'40"><div class="nbn-label" style="color:'+d.accent+'">NBN Classification</div><div style="font-size:15px;color:#c8d0e0">'+d.nbn+'</div></div>';
+  } else if(focusTab==='dosing'){
+    b=[['Starting Dose',d.dos.s],['Target Range',d.dos.t],['Maximum',d.dos.m],['Clinical Notes',d.dos.sw]].map(function(p){return '<div class="drow" style="margin-bottom:12px"><div class="dl">'+p[0]+'</div><div class="dv" style="color:'+d.accent+'">'+p[1]+'</div></div>';}).join('')+
+      (d.lais.length?'<div class="lbl" style="margin:16px 0 10px">LAI Formulations</div>'+d.lais.map(function(l){return '<div style="margin-bottom:12px;padding:14px;background:#12151f;border-radius:8px;border-left:3px solid '+d.accent+'"><div style="font-size:15px;color:'+d.accent+';font-weight:600;margin-bottom:5px">'+l.name+'</div><div style="font-size:12px;color:#8892aa;margin-bottom:6px">'+l.freq+'</div><div style="font-size:13px;color:#c8d0e0;line-height:1.5">'+l.notes+'</div></div>';}).join(''):
+      '<div style="padding:14px;background:#12151f;border-radius:8px;color:#6b7a99;font-size:13px">No LAI formulation available for '+d.generic+' ('+d.brand+').</div>');
+  } else if(focusTab==='side_effects'){
+    b=d.se.map(function(s){return '<div class="se-r"><div><div class="se-name">'+s.n+'</div><div class="se-note">'+s.nt+'</div></div><div class="dots">'+dots(s.v)+'</div></div>';}).join('');
+  } else if(focusTab==='clinical_pearls'){
+    b=d.pearls.map(function(p){return '<div class="pr"><span class="pr-dot" style="color:'+d.accent+'">◆</span><span class="pr-text">'+p+'</span></div>';}).join('');
+  }
+  overlay.innerHTML='<div class="drug-focus-header">'+
+    '<div style="display:flex;align-items:center;gap:14px"><div style="width:14px;height:14px;border-radius:50%;background:'+d.accent+'"></div>'+
+    '<div><div style="font-size:22px;font-weight:600;color:'+d.accent+'">'+d.generic+'</div>'+
+    '<div style="font-size:12px;color:#8892aa;margin-top:3px">'+d.brand+' · '+d.class+'</div></div></div>'+
+    '<button class="drug-focus-close" onclick="closeFocus()">✕ Close</button></div>'+
+    '<div class="drug-focus-tabs">'+tabsHtml+'</div>'+
+    '<div class="drug-focus-body">'+b+'</div>';
+  document.body.appendChild(overlay);
+}
+
+function emptyState(msg){
+  return '<div class="empty-state">'+
+    '<div style="font-size:52px;margin-bottom:20px">💊</div>'+
+    '<div style="font-size:24px;color:#e8e0d0;font-weight:600;margin-bottom:12px">'+(msg||'Select a medication to begin')+'</div>'+
+    '<div style="font-size:14px;color:#6b7a99;max-width:440px;line-height:1.7;margin-bottom:24px">Use the filter buttons above to select one or more agents, or tap any generic name in the header for a focused full-screen view.</div>'+
+    '<div style="font-size:12px;color:#4a5568;padding:12px 18px;background:#ffffff08;border-radius:8px;border:1px solid #ffffff10">Tip: select 2+ drugs to see the head-to-head comparison snapshot</div></div>';
+}
+
+function overview(){
+  var DA=getDA();
+  if(DA.length===0) return filterBar()+emptyState();
+  var cards=DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40">'+
+    '<div class="ch" style="background:linear-gradient(135deg,'+d.color+'30,'+d.color+'10);border-bottom:1px solid '+d.color+'40">'+
+    '<div style="font-size:15px;font-weight:600;color:'+d.accent+'">'+d.generic+badge(d)+srcbadge(d.source)+'</div>'+
+    '<div class="card-brand">'+d.brand+'</div>'+
+    '<div class="card-class" style="color:'+d.accent+'">'+d.class+'</div></div>'+
+    '<div class="cb"><div class="lbl">FDA Indications</div>'+
+    d.fda.map(f=>'<div class="row"><span class="dot4" style="background:'+d.accent+'"></span><span class="t9">'+f+'</span></div>').join('')+
+    '<div class="bb"><div class="bbl">⚠ Warning</div><div style="font-size:12px;color:#c8d0e0;line-height:1.5">'+d.bb+'</div></div></div></div>').join('');
+  var snapData={
+    EPS:{Risperidone:"⚠️ Mod-Hi",Olanzapine:"✅ Low",Quetiapine:"✅ V.Low",Aripiprazole:"✅ Low","Xanomeline/Trospium":"✅ None",Ziprasidone:"✅ Low",Haloperidol:"❌ Highest",Lurasidone:"✅ Low",Clozapine:"✅ V.Low",Brexpiprazole:"✅ Low",Lumateperone:"✅ Low",Cariprazine:"✅ Low",Paliperidone:"⚠️ Mod"},
+    Weight:{Risperidone:"⚠️ Mod",Olanzapine:"❌ Highest",Quetiapine:"⚠️ Mod",Aripiprazole:"✅ Min","Xanomeline/Trospium":"✅ Min",Ziprasidone:"✅ Min",Haloperidol:"⚠️ Some",Lurasidone:"✅ Neutral",Clozapine:"❌ High",Brexpiprazole:"⚠️ Mod",Lumateperone:"✅ Neutral",Cariprazine:"✅ Neutral",Paliperidone:"⚠️ Mod"},
+    Prolactin:{Risperidone:"❌ Highest",Olanzapine:"✅ Min",Quetiapine:"✅ None",Aripiprazole:"✅ Reduces","Xanomeline/Trospium":"✅ None",Ziprasidone:"✅ Min",Haloperidol:"❌ High",Lurasidone:"✅ Low",Clozapine:"✅ Low",Brexpiprazole:"✅ Min",Lumateperone:"✅ Neutral",Cariprazine:"✅ Min",Paliperidone:"❌ 2nd highest"},
+    QTc:{Risperidone:"⚠️ Mild",Olanzapine:"✅ Min",Quetiapine:"⚠️ Mild",Aripiprazole:"✅ Min","Xanomeline/Trospium":"✅ None",Ziprasidone:"⚠️ Overstated",Haloperidol:"⚠️ IV>IM",Lurasidone:"✅ No warning",Clozapine:"⚠️ Dose-dep",Brexpiprazole:"✅ Min",Lumateperone:"✅ Min",Cariprazine:"✅ Min",Paliperidone:"⚠️ Mod"},
+    LAI:{Risperidone:"✅ 4",Olanzapine:"⚠️ PDSS",Quetiapine:"❌",Aripiprazole:"✅ 3+Initio","Xanomeline/Trospium":"❌",Ziprasidone:"❌",Haloperidol:"✅ Decanoate",Lurasidone:"❌",Clozapine:"❌",Brexpiprazole:"❌",Lumateperone:"❌",Cariprazine:"❌",Paliperidone:"✅ 3 (1/3/6mo)"},
+    TRS:{Risperidone:"❌",Olanzapine:"❌",Quetiapine:"❌",Aripiprazole:"❌","Xanomeline/Trospium":"❌",Ziprasidone:"❌",Haloperidol:"❌",Lurasidone:"❌",Clozapine:"✅ ONLY",Brexpiprazole:"❌",Lumateperone:"❌",Cariprazine:"❌",Paliperidone:"❌"},
+    "Bipolar Dep":{Risperidone:"❌",Olanzapine:"✅ w/ fluox",Quetiapine:"✅",Aripiprazole:"❌","Xanomeline/Trospium":"❌",Ziprasidone:"❌",Haloperidol:"❌",Lurasidone:"✅ Mono+Adj",Clozapine:"❌",Brexpiprazole:"❌",Lumateperone:"✅ Mono+Adj",Cariprazine:"✅ Mono",Paliperidone:"❌"},
+    "CYP Metabolism":{Risperidone:"CYP2D6",Olanzapine:"CYP1A2",Quetiapine:"CYP3A4",Aripiprazole:"2D6+3A4","Xanomeline/Trospium":"None",Ziprasidone:"CYP3A4",Haloperidol:"CYP3A4",Lurasidone:"CYP3A4",Clozapine:"1A2+3A4",Brexpiprazole:"2D6+3A4",Lumateperone:"CYP3A4",Cariprazine:"CYP3A4",Paliperidone:"✅ Renal"},
+    "Food Rule":{Risperidone:"None",Olanzapine:"None",Quetiapine:"None",Aripiprazole:"None","Xanomeline/Trospium":"Empty stomach",Ziprasidone:"≥500 cal WITH",Haloperidol:"None",Lurasidone:"≥350 cal WITH",Clozapine:"None",Brexpiprazole:"None",Lumateperone:"With or without",Cariprazine:"With or without",Paliperidone:"None (OROS)"}
+  };
+  var rowKeys=["EPS","Weight","Prolactin","QTc","LAI","TRS","Bipolar Dep","CYP Metabolism","Food Rule"];
+  var hdr='<div style="padding:7px 8px;border-bottom:1px solid #2a2f3e;font-size:9px;color:#6b7a99;font-weight:600;background:#12151f;text-transform:uppercase;letter-spacing:1px">Feature</div>'+
+    DA.map(d=>'<div style="padding:7px 8px;border-bottom:1px solid #2a2f3e;font-size:10px;color:'+AC[d.generic]+';font-weight:600;background:#12151f">'+d.generic+'</div>').join('');
+  var rows=rowKeys.map((key,i)=>{var bg=i%2===0?'#161a28':'#1a1f2e';
+    return '<div style="padding:7px 8px;border-bottom:1px solid #2a2f3e;font-size:10px;color:#6b7a99;background:'+bg+'">'+key+'</div>'+
+      DA.map(d=>'<div style="padding:7px 8px;border-bottom:1px solid #2a2f3e;font-size:10px;color:'+AC[d.generic]+';background:'+bg+'">'+(snapData[key][d.generic]||'?')+'</div>').join('');}).join('');
+  return filterBar()+'<div class="gg">'+cards+'</div>'+
+    (DA.length>=2?'<div class="cmp"><div class="lbl" style="margin-bottom:10px">Head-to-Head Snapshot</div>'+
+    '<div style="display:grid;grid-template-columns:1fr repeat('+DA.length+',1fr);min-width:900px">'+hdr+rows+'</div></div>':'');
+}
+
+function mechanism(){
+  var DA=getDA();
+  if(DA.length===0) return filterBar()+emptyState('Select a medication to view mechanism');
+  var cards=DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40">'+
+    '<div style="padding:10px 14px;border-bottom:1px solid '+d.color+'30">'+
+    '<span style="font-size:14px;color:'+d.accent+';font-weight:600">'+d.generic+'</span>'+
+    '<span style="font-size:11px;color:#6b7a99;margin-left:8px">'+d.brand+'</span></div>'+
+    '<div class="cb">'+d.mech.map(m=>'<div class="mblk"><span style="font-size:18px;flex-shrink:0">'+m.i+'</span><div><div class="mblk-title" style="color:'+d.accent+'">'+m.r+'</div><div class="mblk-desc">'+m.e+'</div></div></div>').join('')+
+    '<div class="nbn" style="background:'+d.color+'15;border:1px solid '+d.color+'30"><div class="nbn-label" style="color:'+d.accent+'">NBN</div><div class="nbn-val">'+d.nbn+'</div></div></div></div>').join('');
+  return filterBar()+'<div class="gg">'+cards+'</div>';
+}
+
+function dosing(){
+  var DA=getDA();
+  if(DA.length===0) return filterBar()+emptyState('Select a medication to view dosing');
+  return filterBar()+'<div class="gg">'+DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40">'+
+    '<div style="padding:10px 14px;border-bottom:1px solid '+d.color+'30">'+
+    '<span style="font-size:14px;color:'+d.accent+';font-weight:600">'+d.generic+'</span>'+
+    '<span style="font-size:11px;color:#6b7a99;margin-left:8px">'+d.brand+'</span></div>'+
+    '<div class="cb">'+[['Starting Dose',d.dos.s],['Target Range',d.dos.t],['Maximum',d.dos.m],['Clinical Notes',d.dos.sw]].map(([l,v])=>
+    '<div class="drow"><div class="dl">'+l+'</div><div class="dv" style="color:'+d.accent+'">'+v+'</div></div>').join('')+
+    (d.lais.length?'<div class="lbl" style="margin-top:6px">LAI Formulations</div>'+d.lais.map(l=>
+    '<div style="margin-bottom:8px;padding:10px 12px;background:'+d.color+'18;border-radius:6px;border:1px solid '+d.color+'30">'+
+    '<div style="font-size:13px;color:'+d.accent+';font-weight:600;margin-bottom:3px">'+l.name+'</div>'+
+    '<div style="font-size:11px;color:#8892aa;margin-bottom:4px">'+l.freq+'</div>'+
+    '<div style="font-size:12px;color:#c8d0e0;line-height:1.5">'+l.notes+'</div></div>').join(''):
+    '<div style="margin-top:6px;padding:8px 10px;background:#12151f;border-radius:6px;font-size:12px;color:#4a5568">No LAI available for '+d.generic+'</div>')+
+    '</div></div>').join('')+'</div>';
+}
+
+function anc(){
+  return '<div style="max-width:960px;margin:0 auto">'+
+    '<div style="background:#1a1f2e;border-radius:10px;border:2px solid #e879f940;padding:16px 20px;margin-bottom:14px">'+
+    '<div style="font-size:16px;color:#e879f9;font-weight:600;margin-bottom:12px">⚠️ Clozapine ANC Monitoring — REMS Program</div>'+
+    '<div style="font-size:13px;color:#c8d0e0;margin-bottom:10px">Baseline ANC must be <strong style="color:#e879f9">≥1500/µL</strong> (general population) or <strong style="color:#e879f9">≥1000/µL</strong> (Benign Ethnic Neutropenia) before initiating.</div>'+
+    '<table class="anctable"><tr><th>ANC Level</th><th>Action</th><th>Monitoring Frequency</th></tr>'+
+    '<tr><td style="color:#38a169;font-weight:600">Normal (≥1500/µL)</td><td>Initiate/Continue treatment</td><td>First 6 months: <strong>weekly</strong> · Second 6 months: <strong>every 2 weeks</strong> · After 1 year: <strong>monthly</strong><br><span style="font-size:10px;color:#6b7a99">If interrupted ≥30 days: restart as new patient</span></td></tr>'+
+    '<tr><td style="color:#dd6b20;font-weight:600">Mild neutropenia (1000–1499/µL)</td><td>Continue. Confirm repeat ANC within 24 hrs.</td><td>3×/week until ANC ≥1500 → return to previous interval</td></tr>'+
+    '<tr><td style="color:#e53e3e;font-weight:600">Moderate (500–999/µL)</td><td>INTERRUPT. Hematology consult.</td><td>Daily until ≥1000 → 3×/week until ≥1500 → weekly ×4 weeks</td></tr>'+
+    '<tr><td style="color:#991b1b;font-weight:600">Severe (&lt;500/µL)</td><td>INTERRUPT. Do NOT rechallenge without benefit/risk review.</td><td>Daily until ≥1000 → 3×/week until ≥1500 → weekly ×4 weeks</td></tr>'+
+    '</table></div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">'+
+    '<div style="background:#1a1f2e;border-radius:10px;border:1px solid #2a2f3e;padding:14px 16px"><div style="font-size:12px;color:#e879f9;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Myocarditis Monitoring (First 6 Weeks Only)</div><div style="font-size:13px;color:#c8d0e0;line-height:1.8">◆ Baseline troponin I/T + CRP before starting<br>◆ Weekly troponin + CRP for first month<br>◆ Stop if troponin ≥2× ULN or CRP >100 mg/L<br>◆ Benign fever (~20%) is self-limited — do NOT stop unless troponin elevated<br>◆ Annual ECG for cardiomyopathy (late complication)</div></div>'+
+    '<div style="background:#1a1f2e;border-radius:10px;border:1px solid #2a2f3e;padding:14px 16px"><div style="font-size:12px;color:#e879f9;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Plasma Level Monitoring</div><div style="font-size:13px;color:#c8d0e0;line-height:1.8">◆ Obtain trough level at 200 mg bedtime<br>◆ Therapeutic threshold: <strong style="color:#38a169">≥350 ng/mL</strong><br>◆ Often not tolerated: >700 ng/mL<br>◆ No evidence supports: >1000 ng/mL<br>◆ Median time to response after reaching ≥350 ng/mL: ~3 weeks</div></div>'+
+    '</div></div>';
+}
+
+function lais(){
+  var DA=getDA();
+  var laiDrugs=ALL_KEYS.map(k=>DRUGS[k]).filter(d=>d.hasLai);
+  var noLaiDrugs=DA.filter(d=>!d.hasLai);
+  var laiSelected=DA.filter(d=>d.hasLai);
+  var showAll=DA.length===0;
+  var drugsToShow=showAll?laiDrugs:DA;
+
+  var laiCards=drugsToShow.filter(d=>d.hasLai).map(d=>
+    '<div class="card" style="border:1px solid '+d.color+'40">'+
+    '<div style="padding:10px 14px;border-bottom:1px solid '+d.color+'30">'+
+    '<span style="font-size:14px;color:'+d.accent+';font-weight:600">'+d.generic+'</span>'+
+    '<span style="font-size:11px;color:#6b7a99;margin-left:8px">'+d.brand+'</span></div>'+
+    '<div class="cb">'+d.lais.map(l=>
+    '<div style="margin-bottom:10px;padding:10px 12px;background:#12151f;border-radius:6px;border-left:3px solid '+d.accent+'">'+
+    '<div style="font-size:14px;color:'+d.accent+';font-weight:600;margin-bottom:4px">'+l.name+'</div>'+
+    '<div style="font-size:11px;color:#8892aa;margin-bottom:5px">'+l.freq+'</div>'+
+    '<div style="font-size:12px;color:#c8d0e0;line-height:1.5">'+l.notes+'</div></div>').join('')+
+    '<div style="padding:8px 10px;background:'+d.color+'15;border-radius:6px;border:1px solid '+d.color+'30;margin-top:4px">'+
+    '<div style="font-size:9px;color:'+d.accent+';text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px">Oral → LAI Transition</div>'+
+    '<div style="font-size:12px;color:#c8d0e0;line-height:1.5">'+d.oral_to_lai+'</div></div></div></div>').join('');
+
+  var noLaiCards=drugsToShow.filter(d=>!d.hasLai).map(d=>
+    '<div class="no-lai-card">'+
+    '<div class="no-lai-header">'+
+    '<span style="font-size:13px;color:#4a5568;font-weight:600">'+d.generic+'</span>'+
+    '<span style="font-size:10px;color:#3a4050;margin-left:8px">'+d.brand+'</span>'+
+    '<span style="display:inline-block;font-size:9px;color:#3a4050;background:#ffffff08;border:1px solid #2a2f3e;border-radius:6px;padding:1px 6px;margin-left:8px;vertical-align:middle">No LAI</span></div>'+
+    '<div class="no-lai-body">'+d.oral_to_lai+'</div></div>').join('');
+
+  var taper='<div class="cmp" style="margin-top:14px"><div class="lbl" style="margin-bottom:10px">Down-Titration When Switching TO Aripiprazole LAI or Haloperidol Decanoate (Stahl\'s)</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">'+
+    [["✅ No taper","amisulpride, aripiprazole, brexpiprazole, cariprazine, lumateperone, paliperidone ER","#38a169"],
+     ["⚠️ 1-week taper","iloperidone, lurasidone, risperidone, ziprasidone","#dd6b20"],
+     ["⚠️ 3–4 week taper","asenapine, olanzapine, quetiapine","#e09000"],
+     ["❌ 4+ week taper","clozapine — always taper slowly","#e53e3e"]].map(([label,drugs,color])=>
+    '<div style="padding:10px;background:#12151f;border-radius:8px;border-top:3px solid '+color+'">'+
+    '<div style="font-size:9px;color:'+color+';text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:600">'+label+'</div>'+
+    '<div style="font-size:12px;color:#c8d0e0;line-height:1.6">'+drugs+'</div></div>').join('')+'</div></div>';
+
+  var invegaSection='<div class="cmp" style="margin-top:14px">'+
+    '<div style="font-size:15px;color:#67e8f9;font-weight:600;margin-bottom:14px">💉 Paliperidone (Invega) — Full LAI Program: Sustenna · Trinza · Hafyera</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">'+
+    [["Invega Sustenna","#0e4f64","#67e8f9","IM q4wk","Deltoid (loading) or deltoid/gluteal (maintenance)","234 mg loading","13 days","24–49 days","1 week","39, 78, 117, 156, 234 mg","22 or 23 gauge","YES — 234 mg day 1 + 156 mg day 8 (both deltoid). No oral overlap needed."],
+     ["Invega Trinza","#065f46","#34d399","IM q3mo","Deltoid or gluteal","273–819 mg","30–33 days","84–139 days","N/A","273, 410, 546, 819 mg","22 gauge","NO — requires ≥4 months on Sustenna. Last 2 Sustenna doses same strength."],
+     ["Invega Hafyera","#581c87","#e879f9","IM q6mo","GLUTEAL ONLY","1092 or 1560 mg","29–32 days","148–159 days","N/A","1092, 1560 mg","20 gauge","NO — requires ≥4 months on Sustenna OR ≥1 Trinza cycle."]
+    ].map(([name,bg,ac,freq,site,dose,tmax,t12,load,forms,gauge,req])=>
+    '<div style="background:'+bg+'30;border-radius:8px;border:1px solid '+ac+'40;padding:14px">'+
+    '<div style="font-size:14px;color:'+ac+';font-weight:600;margin-bottom:12px">'+name+'</div>'+
+    [["Frequency",freq],["Injection Site",site],["Dose Range",dose],["Tmax",tmax],["T½",t12],["Steady State",load],["Forms",forms],["Gauge",gauge],["Loading",req]].map(([l,v])=>
+    '<div style="margin-bottom:7px"><div style="font-size:8px;color:'+ac+';text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px">'+l+'</div><div style="font-size:12px;color:#c8d0e0;line-height:1.4">'+v+'</div></div>').join('')+'</div>').join('')+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">'+
+    '<div style="background:#1a1f2e;border-radius:8px;border:1px solid #2a2f3e;padding:14px">'+
+    '<div style="font-size:11px;color:#67e8f9;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Oral → Sustenna</div>'+
+    '<table class="laitbl"><tr><th>Oral Paliperidone</th><th>Sustenna Dose</th></tr>'+
+    '<tr><td>3 mg/day</td><td>39–78 mg/month</td></tr><tr><td>6 mg/day</td><td>117 mg/month</td></tr>'+
+    '<tr><td>9 mg/day</td><td>156 mg/month</td></tr><tr><td>12 mg/day</td><td>234 mg/month</td></tr></table></div>'+
+    '<div style="background:#1a1f2e;border-radius:8px;border:1px solid #2a2f3e;padding:14px">'+
+    '<div style="font-size:11px;color:#67e8f9;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Sustenna → Trinza</div>'+
+    '<table class="laitbl"><tr><th>Last Sustenna</th><th>Trinza Dose</th></tr>'+
+    '<tr><td>78 mg</td><td>273 mg</td></tr><tr><td>117 mg</td><td>410 mg</td></tr>'+
+    '<tr><td>156 mg</td><td>546 mg</td></tr><tr><td>234 mg</td><td>819 mg</td></tr></table></div>'+
+    '<div style="background:#1a1f2e;border-radius:8px;border:1px solid #2a2f3e;padding:14px">'+
+    '<div style="font-size:11px;color:#67e8f9;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">→ Hafyera</div>'+
+    '<table class="laitbl"><tr><th>Last Dose</th><th>Hafyera</th></tr>'+
+    '<tr><td>Sustenna 156 mg</td><td>1092 mg</td></tr><tr><td>Sustenna 234 mg</td><td>1560 mg</td></tr>'+
+    '<tr><td>Trinza 546 mg</td><td>1092 mg</td></tr><tr><td>Trinza 819 mg</td><td>1560 mg</td></tr></table>'+
+    '<div style="font-size:10px;color:#6b7a99;margin-top:6px">No Hafyera equivalent for Sustenna &lt;156 mg or Trinza &lt;546 mg</div></div>'+
+    '</div></div>';
+
+  return filterBar()+
+    '<div class="gg">'+laiCards+noLaiCards+'</div>'+
+    taper+invegaSection;
+}
+
+function sideEffects(){
+  var DA=getDA();
+  if(DA.length===0) return filterBar()+emptyState('Select a medication to view side effects');
+  var cards=DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40">'+
+    '<div style="padding:10px 14px;border-bottom:1px solid '+d.color+'30">'+
+    '<span style="font-size:14px;color:'+d.accent+';font-weight:600">'+d.generic+'</span>'+
+    '<span style="font-size:11px;color:#6b7a99;margin-left:8px">'+d.brand+'</span></div>'+
+    '<div class="cb">'+d.se.map(s=>'<div class="se-r"><div><div class="se-name">'+s.n+'</div><div class="se-note">'+s.nt+'</div></div><div class="dots">'+dots(s.v)+'</div></div>').join('')+'</div></div>').join('');
+  var mons=["BMI monthly ×3, then quarterly","Fasting glucose + lipids at 3 months, then annually","Blood pressure at 3 months, then annually","AIMS for tardive dyskinesia periodically","Prolactin if symptomatic","Cobenfy: LFTs + bilirubin before starting","Cobenfy: heart rate and blood pressure baseline","Cobenfy: monitor for urinary retention","Geodon: baseline EKG + potassium + magnesium","Haloperidol: AIMS every 6–12 months","Aripiprazole/Brexpiprazole: akathisia monitoring","Brexpiprazole: impulse control monitoring","Lurasidone: bedtime dosing strongly recommended","Clozapine: ANC per REMS schedule (see ANC tab)","Clozapine: troponin + CRP weekly × first month","Clozapine: trough plasma level at 200 mg bedtime","Clozapine: bowel function — docusate for ALL patients","Lumateperone: evening dosing recommended","Cariprazine: monitor for adverse effects for weeks after dose changes","Paliperidone: prolactin and bone density in low-estrogen women","Paliperidone: renal function before starting — renally cleared","Paliperidone: baseline EKG — more QTc prolongation than some SGAs"];
+  return filterBar()+'<div class="gg" style="margin-bottom:14px">'+cards+'</div>'+
+    '<div style="background:#1a1f2e;border-radius:10px;border:1px solid #2a2f3e;padding:14px 18px"><div class="lbl">Monitoring — All 13 Agents</div><div class="mon">'+
+    mons.map(m=>'<div class="mi"><span style="color:#4fc3f7;margin-right:6px">✓</span>'+m+'</div>').join('')+'</div></div>';
+}
+
+function pearls(){
+  var DA=getDA();
+  if(DA.length===0) return filterBar()+emptyState('Select a medication to view clinical pearls');
+  return filterBar()+'<div class="gg">'+DA.map(d=>'<div class="card" style="border:1px solid '+d.color+'40">'+
+    '<div style="padding:10px 14px;border-bottom:1px solid '+d.color+'30">'+
+    '<span style="font-size:14px;color:'+d.accent+';font-weight:600">'+d.generic+'</span>'+
+    '<span style="font-size:11px;color:#6b7a99;margin-left:8px">'+d.brand+'</span></div>'+
+    '<div class="cb">'+d.pearls.map(p=>'<div class="pr"><span class="pr-dot" style="color:'+d.accent+'">◆</span><span class="pr-text">'+p+'</span></div>').join('')+'</div></div>').join('')+'</div>';
+}
+
+var QZ=[
+  {q:"Risperidone and paliperidone are closely related. What is the relationship — and what is the critical clinical rule that follows from it?",a:"Paliperidone (Invega) IS the 9-OH active metabolite of risperidone (Risperdal). The clinical rule: NEVER combine them — you are giving the same active drug twice, compounding all side effects (EPS, prolactin, QTc) without any additional antipsychotic benefit.",drug:"Paliperidone"},
+  {q:"Paliperidone has a unique pharmacokinetic profile not shared by any other antipsychotic in this reference. What is it and why does it matter?",a:"Paliperidone is NOT metabolized by CYP enzymes — it is renally cleared. This means no significant CYP-based drug interactions, making it predictable in patients on complex polypharmacy. However, renal impairment significantly affects levels and requires dose reduction.",drug:"Paliperidone"},
+  {q:"What is the Invega Sustenna loading protocol — and what makes it unique among all LAIs?",a:"Loading: 234 mg IM deltoid on day 1, then 156 mg IM deltoid on day 8. NO oral overlap is needed — Sustenna can be fully loaded without oral coverage. This is unique and clinically valuable for non-adherent patients or at hospital discharge.",drug:"Paliperidone"},
+  {q:"Clozapine is the only FDA-approved drug for TRS. What is the response rate — and how does it compare to other atypical antipsychotics in TRS?",a:"50–60% response rate in strictly defined TRS. Other atypical antipsychotics have a response rate of only 0–9% in the TRS population. This is the clinical basis for clozapine's unique status.",drug:"Clozapine"},
+  {q:"Clozapine dosing is not based on mg/day. What guides it — and what are the key plasma level thresholds?",a:"Plasma level-guided dosing. Therapeutic threshold: trough plasma level ≥350 ng/mL. Levels >700 ng/mL often not tolerated. No evidence supports dosing resulting in levels >1000 ng/mL. Obtain trough at 200 mg bedtime.",drug:"Clozapine"},
+  {q:"What GI risk must be addressed for every patient started on clozapine — and what is the standard prophylactic intervention?",a:"Constipation leading to paralytic ileus — which can be fatal. ALL patients must receive docusate 250 mg at initiation. Escalate to Miralax, then bisacodyl or sennosides if needed. Avoid psyllium.",drug:"Clozapine"},
+  {q:"Cariprazine has a unique receptor mechanism not shared by any other antipsychotic in this reference. What is it?",a:"D3 partial agonism in vivo — the most potent functional D3 partial agonist of any antipsychotic in the living human brain. D3 receptors in the VTA/substantia nigra drive dopamine release into the prefrontal cortex, improving cognition, motivation, and negative symptoms.",drug:"Cariprazine"},
+  {q:"Cariprazine has an unusually long active metabolite. Why does this matter clinically?",a:"Active metabolite DDCAR has a half-life of 1–3 WEEKS. Adverse effects (including akathisia) may appear weeks after starting or increasing the dose as drug accumulates. Monitor for adverse effects and response for several weeks after any dose change.",drug:"Cariprazine"},
+  {q:"Lumateperone has two antidepressant mechanisms unique in this reference. What are they?",a:"1) D1 receptor agonism → AMPA receptor activation → mTOR pathway — a preclinical antidepressant mechanism unique to lumateperone. 2) SERT inhibition (SSRI-like property). No other drug in this reference has both of these.",drug:"Lumateperone"},
+  {q:"What is the unique triple drug interaction concern with lumateperone?",a:"Avoid with: (1) CYP3A4 inhibitors (fluvoxamine, nefazodone, grapefruit), (2) CYP3A4 inducers (carbamazepine, phenytoin, St. John's wort), AND (3) UGT inhibitors (valproate). The valproate interaction is particularly high-yield since it is commonly co-prescribed as a mood stabilizer.",drug:"Lumateperone"},
+  {q:"Ziprasidone must be taken with food. What happens if it isn't and how much food is needed?",a:"Without food, bioavailability is roughly halved — resulting in subtherapeutic plasma levels even at an adequate prescribed dose. At least 500 calories are required. This is the most stringent food requirement of all agents in this reference.",drug:"Ziprasidone"},
+  {q:"Haloperidol has the highest EPS and tardive dyskinesia risk of all 13 agents. Why?",a:"Pure high-potency D2 antagonist with NO 5-HT2A modulation. All SGAs have 5-HT2A blockade which partially reverses D2 blockade in motor circuits, reducing EPS. Haloperidol lacks this protection entirely — pure striatal D2 block produces maximum EPS and TD risk.",drug:"Haloperidol"},
+];
+
+function quiz(){
+  var q=QZ[qi];var dc=AC[q.drug]||'#4fc3f7';
+  return '<div class="qcard">'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'+
+    '<div style="font-size:10px;letter-spacing:3px;color:#6b7a99;text-transform:uppercase">Question '+(qi+1)+' of '+QZ.length+'</div>'+
+    '<div style="font-size:11px;color:'+dc+';padding:4px 12px;background:'+dc+'20;border-radius:10px;border:1px solid '+dc+'40">'+q.drug+'</div></div>'+
+    '<div style="font-size:16px;color:#e8e0d0;line-height:1.7;margin-bottom:20px">'+q.q+'</div>'+
+    (!sa?'<button class="qbtn" style="background:#4fc3f720;border-color:#4fc3f740;color:#4fc3f7" onclick="revA()">Reveal Answer</button>':
+    '<div class="ablock"><div style="font-size:9px;color:#68d391;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">✓ Answer</div>'+
+    '<div style="font-size:14px;color:#c8d0e0;line-height:1.7">'+q.a+'</div></div>'+
+    '<button class="qbtn" style="background:#ffb34720;border-color:#ffb34740;color:#ffb347" onclick="nxtQ()">Next Question →</button>')+'</div>';
+}
+
+function converter(){
+  var agents=[
+    {key:'risperidone',label:'Risperidone (Risperdal)',accent:'#4fc3f7',color:'#1a6b9e',
+     lais:[
+      {name:'Risperdal Consta',freq:'IM q2wk',overlap:'3-week oral overlap required',
+       custom:[25,37.5,50],unit:'mg q2wk',note:'2 mg/day oral ≈ 25 mg q2wk · 4 mg/day ≈ 37.5 mg · 6 mg/day ≈ 50 mg. Max 50 mg q2wk.',
+       interp:function(v){var t={25:'~2 mg/day oral',37.5:'~4 mg/day oral',50:'~6 mg/day oral'};return t[v]||'See PI';}},
+      {name:'Perseris (SQ monthly)',freq:'SQ monthly',overlap:'No oral overlap needed',
+       custom:[90,120],unit:'mg/month SQ',note:'90 mg = 3 mg/day oral · 120 mg = 4 mg/day oral. Abdomen only.',
+       interp:function(v){return v===90?'~3 mg/day oral':'~4 mg/day oral';}},
+      {name:'Uzedy (SQ monthly)',freq:'SQ monthly',overlap:'No oral overlap needed',
+       custom:[50,75,100,125],unit:'mg/month SQ',note:'Direct oral-to-LAI mapping. Also available q2mo at 2× monthly dose.',
+       interp:function(v){var t={50:'2 mg/day oral',75:'3 mg/day oral',100:'4 mg/day oral',125:'5 mg/day oral'};return t[v]||'See PI';}},
+    ]},
+    {key:'paliperidone',label:'Paliperidone (Invega)',accent:'#67e8f9',color:'#164e63',
+     lais:[
+      {name:'Invega Sustenna (1-month)',freq:'IM q4wk',overlap:'NO oral overlap — can load',
+       custom:[39,78,117,156,234],unit:'mg/month IM',note:'Loading: 234 mg day 1 + 156 mg day 8 (both deltoid). No oral coverage needed. Therapeutic: ≥28 ng/mL.',
+       interp:function(v){var t={39:'~3 mg/day oral',78:'~3–6 mg/day oral',117:'~6 mg/day oral',156:'~9 mg/day oral',234:'~12 mg/day oral'};return t[v]||'See PI';}},
+      {name:'Invega Trinza (3-month)',freq:'IM q3mo',overlap:'Requires ≥4 months on Sustenna first',
+       custom:[273,410,546,819],unit:'mg q3mo IM',note:'Last 2 Sustenna doses must be same strength before converting.',
+       interp:function(v){var t={273:'Sustenna 78 mg equiv',410:'Sustenna 117 mg equiv',546:'Sustenna 156 mg equiv',819:'Sustenna 234 mg equiv'};return t[v]||'See PI';}},
+      {name:'Invega Hafyera (6-month)',freq:'IM q6mo — gluteal only',overlap:'≥4 months on Sustenna OR ≥1 Trinza cycle',
+       custom:[1092,1560],unit:'mg q6mo IM',note:'Gluteal injection only. No equivalent for Sustenna <156 mg.',
+       interp:function(v){return v===1092?'Sustenna 156 mg / Trinza 546 mg equiv':'Sustenna 234 mg / Trinza 819 mg equiv';}},
+    ]},
+    {key:'aripiprazole',label:'Aripiprazole (Abilify)',accent:'#c084fc',color:'#6b2d8e',
+     lais:[
+      {name:'Abilify Maintena',freq:'IM q4wk',overlap:'14-day oral overlap required',
+       custom:[300,400],unit:'mg/month IM',note:'400 mg standard. Reduce to 300 mg if adverse effects or CYP inhibitors.',
+       interp:function(v){return v===400?'Standard maintenance dose':'Reduced — adverse effects or CYP2D6/3A4 inhibitor';}},
+      {name:'Abilify Asimtufii',freq:'IM q8wk',overlap:'7-day oral overlap required',
+       custom:[720,960],unit:'mg q8wk IM',note:'960 mg standard. Reduce to 720 mg if adverse effects or CYP inhibitors.',
+       interp:function(v){return v===960?'Standard q8wk dose':'Reduced — adverse effects or CYP inhibitor';}},
+      {name:'Aristada',freq:'IM monthly/q6wk/q8wk',overlap:'21-day oral overlap OR Aristada Initio same day',
+       custom:[441,662,882,1064],unit:'mg IM (monthly)',note:'Aristada Initio (675 mg + 30 mg oral same day) eliminates 21-day oral overlap.',
+       interp:function(v){var t={441:'~10 mg/day oral',662:'~15 mg/day oral',882:'~20 mg/day oral',1064:'~30 mg/day oral'};return t[v]||'See PI';}},
+    ]},
+    {key:'haloperidol',label:'Haloperidol (Haldol)',accent:'#fb923c',color:'#78350f',
+     lais:[
+      {name:'Haldol Decanoate',freq:'IM q4wk',overlap:'Oral overlap first week recommended',
+       min:50,max:300,step:25,unit:'mg/month IM',note:'General rule: LAI dose = 10–20× daily oral dose. Loading: 300 mg q1–2wk × 2 doses. Therapeutic: ≥5 ng/mL; futility: >30 ng/mL.',
+       interp:function(v){if(v<=50)return '~2–5 mg/day oral (10×)';if(v<=100)return '~5–10 mg/day oral';if(v<=200)return '~10–20 mg/day oral';return 'High dose — verify with plasma levels';}},
+    ]},
+  ];
+
+  var ALL_AGENT_KEYS=['risperidone','olanzapine','quetiapine','aripiprazole','xanomeline','ziprasidone','haloperidol','lurasidone','clozapine','brexpiprazole','lumateperone','cariprazine','paliperidone'];
+  var HAS_LAI_KEYS=['risperidone','aripiprazole','haloperidol','paliperidone'];
+  var AGENT_COLORS={risperidone:'#4fc3f7',olanzapine:'#ffb347',quetiapine:'#7ee8a2',aripiprazole:'#c084fc',xanomeline:'#f472b6',ziprasidone:'#38bdf8',haloperidol:'#fb923c',lurasidone:'#a3e635',clozapine:'#e879f9',brexpiprazole:'#34d399',lumateperone:'#fb7185',cariprazine:'#fbbf24',paliperidone:'#67e8f9'};
+  var AGENT_LABELS={risperidone:'Risperidone',olanzapine:'Olanzapine',quetiapine:'Quetiapine',aripiprazole:'Aripiprazole',xanomeline:'Xanomeline/Trospium',ziprasidone:'Ziprasidone',haloperidol:'Haloperidol',lurasidone:'Lurasidone',clozapine:'Clozapine',brexpiprazole:'Brexpiprazole',lumateperone:'Lumateperone',cariprazine:'Cariprazine',paliperidone:'Paliperidone'};
+
+  var cvState=window._cvState||{agent:'paliperidone',lai:0,slider:0};
+  window._cvState=cvState;
+
+  var ag=agents.find(function(a){return a.key===cvState.agent;});
+  var lai=ag?ag.lais[cvState.lai]:null;
+  var sliderVal=cvState.slider;
+
+  var html='<div style="max-width:940px;margin:0 auto">';
+  html+='<div style="background:#1a1f2e;border-radius:12px;border:2px solid #4fc3f730;padding:18px 22px;margin-bottom:16px">';
+  html+='<div style="font-size:14px;color:#4fc3f7;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;font-weight:600">💉 Oral → LAI Dose Converter</div>';
+
+  // Agent selector with grayout
+  html+='<div style="margin-bottom:16px"><div style="font-size:9px;color:#6b7a99;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">Select Agent <span style="color:#4a5568;text-transform:none;letter-spacing:0;font-size:9px">— strikethrough = no LAI available</span></div>';
+  html+='<div style="display:flex;gap:8px;flex-wrap:wrap">';
+  ALL_AGENT_KEYS.forEach(function(k){
+    var hasLai=HAS_LAI_KEYS.indexOf(k)>=0;
+    var on=k===cvState.agent&&hasLai;
+    var col=AGENT_COLORS[k];
+    var label=AGENT_LABELS[k];
+    if(hasLai){
+      html+='<button onclick="window._cvState.agent=\''+k+'\';window._cvState.lai=0;window._cvState.slider=0;switchTab(\'converter\',document.querySelector(\'.tb[onclick*=converter]\'))" style="padding:7px 14px;border-radius:20px;border:1px solid '+(on?col:col+'50')+';background:'+(on?'#1a3050':'transparent')+';color:'+(on?col:col+'cc')+';font-size:11px;cursor:pointer;font-family:Georgia,serif;font-weight:'+(on?'600':'400')+'">'+label+'</button>';
+    } else {
+      html+='<span style="padding:7px 14px;border-radius:20px;border:1px solid #2a2f3e;color:#3a4050;font-size:11px;font-family:Georgia,serif;text-decoration:line-through;cursor:not-allowed" title="No LAI available">'+label+'</span>';
+    }
+  });
+  html+='</div></div>';
+
+  if(ag){
+    // LAI formulation selector
+    html+='<div style="margin-bottom:18px"><div style="font-size:9px;color:#6b7a99;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">Select LAI Formulation</div>';
+    html+='<div style="display:flex;gap:8px;flex-wrap:wrap">';
+    ag.lais.forEach(function(l,i){
+      var on=i===cvState.lai;
+      html+='<button onclick="window._cvState.lai='+i+';window._cvState.slider=0;switchTab(\'converter\',document.querySelector(\'.tb[onclick*=converter]\'))" style="padding:7px 14px;border-radius:20px;border:1px solid '+(on?ag.accent:ag.accent+'40')+';background:'+(on?'#1a3050':'transparent')+';color:'+(on?ag.accent:'#6b7a99')+';font-size:11px;cursor:pointer;font-family:Georgia,serif">'+l.name+'</button>';
+    });
+    html+='</div></div>';
+    html+='</div>';
+
+    // Converter card
+    html+='<div style="background:#1a1f2e;border-radius:12px;border:1px solid '+ag.accent+'30;padding:22px 26px;margin-bottom:16px">';
+    html+='<div style="font-size:15px;color:'+ag.accent+';font-weight:600;margin-bottom:5px">'+lai.name+'</div>';
+    html+='<div style="font-size:11px;color:#8892aa;margin-bottom:18px">'+lai.freq+' · <span style="color:#fbbf24">'+lai.overlap+'</span></div>';
+
+    if(lai.custom){
+      html+='<div style="font-size:10px;color:#6b7a99;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px">Select LAI Dose</div>';
+      html+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px">';
+      lai.custom.forEach(function(dose){
+        var on=sliderVal===dose;
+        html+='<button onclick="window._cvState.slider='+dose+';switchTab(\'converter\',document.querySelector(\'.tb[onclick*=converter]\'))" style="padding:12px 20px;border-radius:8px;border:1px solid '+(on?ag.accent:ag.accent+'30')+';background:'+(on?ag.color+'80':'#12151f')+';color:'+(on?ag.accent:'#c8d0e0')+';font-size:15px;font-weight:600;cursor:pointer;font-family:Georgia,serif">'+dose+' mg</button>';
+      });
+      html+='</div>';
+    } else {
+      html+='<div style="font-size:10px;color:#6b7a99;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px">LAI Dose</div>';
+      html+='<input type="range" min="'+lai.min+'" max="'+lai.max+'" step="'+lai.step+'" value="'+(sliderVal||lai.min)+'" oninput="window._cvState.slider=parseInt(this.value);document.getElementById(\'cv-result\').innerHTML=getConverterResult()" style="width:100%;accent-color:'+ag.accent+';margin-bottom:10px">';
+      html+='<div style="display:flex;justify-content:space-between;font-size:11px;color:#6b7a99;margin-bottom:18px"><span>'+lai.min+' mg</span><span>'+lai.max+' mg</span></div>';
+    }
+
+    var resultHtml='<div style="background:#2a5568;border-radius:10px;border:1px solid #ffffff20;padding:0">no selection</div>';
+    if(sliderVal>0){
+      resultHtml='<div style="background:'+ag.color+'25;border-radius:10px;border:1px solid '+ag.accent+'40;padding:18px 22px">'+
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">'+
+        '<div><div style="font-size:10px;color:'+ag.accent+';text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">LAI Dose</div>'+
+        '<div style="font-size:32px;color:'+ag.accent+';font-weight:600">'+sliderVal+' mg</div>'+
+        '<div style="font-size:11px;color:#8892aa;margin-top:3px">'+lai.unit+'</div></div>'+
+        '<div><div style="font-size:10px;color:'+ag.accent+';text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">Oral Equivalent</div>'+
+        '<div style="font-size:22px;color:#e8e0d0;font-weight:600;line-height:1.3">'+lai.interp(sliderVal)+'</div>'+
+        '<div style="font-size:11px;color:#8892aa;margin-top:4px">'+lai.freq+'</div></div>'+
+        '</div></div>';
+    } else {
+      resultHtml='<div style="background:#12151f;border-radius:10px;border:1px dashed #2a2f3e;padding:28px;text-align:center;color:#6b7a99;font-size:13px">Select a dose above to see the oral equivalent</div>';
+    }
+    html+='<div id="cv-result">'+resultHtml+'</div>';
+    html+='<div style="background:#12151f;border-radius:8px;padding:14px 16px;margin-top:14px"><div style="font-size:9px;color:'+ag.accent+';text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">Clinical Notes</div><div style="font-size:12px;color:#c8d0e0;line-height:1.7">'+lai.note+'</div></div>';
+    html+='</div>';
+
+    // Equivalency table
+    html+='<div style="background:#1a1f2e;border-radius:12px;border:1px solid '+ag.accent+'30;padding:16px 20px">';
+    html+='<div style="font-size:11px;color:'+ag.accent+';font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px">Full Equivalency Reference — '+lai.name+'</div>';
+    html+='<table class="laitbl">';
+    html+='<tr><th>Oral Dose</th><th>LAI Dose</th><th>Equivalency Note</th></tr>';
+    if(lai.custom){
+      lai.custom.forEach(function(dose,i){
+        var bg=i%2===0?'#161a28':'#1a1f2e';
+        html+='<tr><td style="background:'+bg+';font-size:12px">'+lai.interp(dose)+'</td><td style="background:'+bg+';color:'+ag.accent+';font-weight:600;font-size:13px">'+dose+' mg</td><td style="background:'+bg+';font-size:11px;color:#8892aa">'+lai.unit+'</td></tr>';
+      });
+    } else {
+      [[50,'~2–5 mg/day'],[100,'~5–10 mg/day'],[150,'~7.5–15 mg/day'],[200,'~10–20 mg/day'],[250,'~12–25 mg/day'],[300,'High dose']].forEach(function(p,i){
+        var bg=i%2===0?'#161a28':'#1a1f2e';
+        html+='<tr><td style="background:'+bg+';font-size:12px">'+p[1]+'</td><td style="background:'+bg+';color:'+ag.accent+';font-weight:600;font-size:13px">'+p[0]+' mg</td><td style="background:'+bg+';font-size:11px;color:#8892aa">'+lai.unit+'</td></tr>';
+      });
+    }
+    html+='</table></div>';
+  } else {
+    html+='</div>';
+  }
+  html+='</div>';
+  document.getElementById('cnt').innerHTML=html;
+  return '';
+}
+
+function revA(){sa=true;render();}
+function nxtQ(){qi=(qi+1)%QZ.length;sa=false;render();}
+function enterTool(){document.getElementById('landing').style.display='none';document.getElementById('app').style.display='block';}
+function render(){
+  var map={overview:overview,mechanism:mechanism,dosing:dosing,anc:anc,lais:lais,sideEffects:sideEffects,pearls:pearls,quiz:quiz,converter:converter};
+  if(tab==='converter'){converter();return;}
+  document.getElementById('cnt').innerHTML=map[tab]();
+}
+function switchTab(t,el){tab=t;qi=0;sa=false;document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));if(el)el.classList.add('on');render();}
+render();
+</script>
+</div>
+</body>
+</html>

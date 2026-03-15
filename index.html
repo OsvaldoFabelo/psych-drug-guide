@@ -25,16 +25,42 @@ body{font-family:Georgia,serif;background:#0f1117;color:#e8e0d0}
   .hdr{padding:10px 12px}
   .title{font-size:11px}
   .drug-filter{padding:8px 10px;gap:5px}
-  .df-btn{font-size:8px;padding:4px 8px}
-  .card .cb,.card .ch,.cb,.ch{padding:8px 10px}
-  .lbl{font-size:7px}
-  .t9{font-size:8px}
-  .pr span:last-child,.pr span{font-size:8px}
-  .qcard{padding:14px}
+  .df-btn{font-size:11px;padding:6px 12px}
+  .card .cb,.card .ch,.cb,.ch{padding:10px 12px}
+  .lbl{font-size:9px;letter-spacing:1.5px}
+  .t9{font-size:12px;line-height:1.6}
+  .bbl{font-size:9px}
+  .bb div{font-size:10px}
+  .pr span:last-child{font-size:11px;line-height:1.6}
+  .mblk div div:first-child{font-size:10px}
+  .mblk div div:last-child{font-size:10px}
+  .drow .dl{font-size:8px}
+  .drow div:last-child{font-size:10px}
+  .se-r div div:first-child{font-size:11px}
+  .se-r div div:last-child{font-size:9px}
+  .mi{font-size:10px;padding:7px 9px}
+  .qcard{padding:16px}
   .mon{grid-template-columns:1fr}
   .tg{grid-template-columns:1fr}
   .spanall .tg{grid-template-columns:1fr}
+  .tb{font-size:11px;padding:10px 13px}
+  .nbn div:first-child{font-size:8px}
+  .nbn div:last-child{font-size:10px}
+  .card .ch div:first-child{font-size:13px!important}
+  .card .ch div:nth-child(2){font-size:10px!important}
+  .card .ch div:nth-child(3){font-size:9px!important}
 }
+/* Landing page styles */
+.landing{position:fixed;inset:0;background:#0a0d14;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:24px;text-align:center}
+.landing-logo{font-size:11px;letter-spacing:6px;color:#4fc3f7;text-transform:uppercase;margin-bottom:8px}
+.landing-name{font-size:clamp(36px,8vw,72px);font-weight:700;color:#e8e0d0;line-height:1.1;margin-bottom:6px;letter-spacing:-1px}
+.landing-sub{font-size:clamp(13px,2.5vw,18px);color:#4fc3f7;letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
+.landing-desc{font-size:clamp(13px,2vw,16px);color:#8892aa;max-width:560px;line-height:1.8;margin-bottom:20px}
+.landing-drugs{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;max-width:600px;margin-bottom:36px}
+.landing-drug{font-size:11px;padding:4px 10px;border-radius:12px;border:1px solid;opacity:0.8}
+.landing-disc{font-size:10px;color:#4a5568;max-width:500px;line-height:1.6;margin-bottom:40px;padding:12px 16px;background:#ffffff08;border-radius:8px;border:1px solid #ffffff10}
+.landing-btn{background:linear-gradient(135deg,#1a4a6e,#2d6a9e);border:1px solid #4fc3f7;color:#e8e0d0;padding:16px 48px;border-radius:8px;font-size:14px;font-family:Georgia,serif;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.landing-btn:hover{background:linear-gradient(135deg,#2d6a9e,#3d8abf);transform:translateY(-1px)}
 @media(min-width:701px) and (max-width:1100px){
   .gg{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
   .mon{grid-template-columns:1fr 1fr}
@@ -79,6 +105,30 @@ body{font-family:Georgia,serif;background:#0f1117;color:#e8e0d0}
 </style>
 </head>
 <body>
+<div class="landing" id="landing">
+  <div class="landing-logo">Baseline Mind &amp; Wellness</div>
+  <div class="landing-name">Psych Drug<br>Guide</div>
+  <div class="landing-sub">Antipsychotic Reference</div>
+  <div class="landing-desc">A clinical reference tool covering 13 antipsychotic agents — mechanisms, dosing, LAI conversions, side effect profiles, and monitoring protocols. Sourced from Stahl's Prescriber's Guide.</div>
+  <div class="landing-drugs">
+    <span class="landing-drug" style="color:#4fc3f7;border-color:#4fc3f740">Risperdal</span>
+    <span class="landing-drug" style="color:#ffb347;border-color:#ffb34740">Zyprexa</span>
+    <span class="landing-drug" style="color:#7ee8a2;border-color:#7ee8a240">Seroquel</span>
+    <span class="landing-drug" style="color:#c084fc;border-color:#c084fc40">Abilify</span>
+    <span class="landing-drug" style="color:#f472b6;border-color:#f472b640">Cobenfy</span>
+    <span class="landing-drug" style="color:#38bdf8;border-color:#38bdf840">Geodon</span>
+    <span class="landing-drug" style="color:#fb923c;border-color:#fb923c40">Haldol</span>
+    <span class="landing-drug" style="color:#a3e635;border-color:#a3e63540">Latuda</span>
+    <span class="landing-drug" style="color:#e879f9;border-color:#e879f940">Clozaril</span>
+    <span class="landing-drug" style="color:#34d399;border-color:#34d39940">Rexulti</span>
+    <span class="landing-drug" style="color:#fb7185;border-color:#fb718540">Caplyta</span>
+    <span class="landing-drug" style="color:#fbbf24;border-color:#fbbf2440">Vraylar</span>
+    <span class="landing-drug" style="color:#67e8f9;border-color:#67e8f940">Invega</span>
+  </div>
+  <div class="landing-disc">⚠️ For educational and clinical reference purposes only. This tool does not constitute medical advice. Always verify dosing and clinical decisions against current prescribing information and institutional guidelines.</div>
+  <button class="landing-btn" onclick="enterTool()">Enter Reference Tool</button>
+</div>
+<div id="app" style="display:none">
 <div class="hdr">
   <div style="max-width:2000px;margin:0 auto">
     <div class="eyebrow">Psych Drug Guide · Antipsychotic Reference — 13 Drugs · Stahl's Prescriber's Guide</div>
@@ -532,13 +582,34 @@ function converter(){
     html+='<div style="font-size:11px;color:'+ag.accent+';letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">💉 Oral → LAI Dose Converter</div>';
 
     // agent selector
-    html+='<div style="margin-bottom:14px"><div style="font-size:8px;color:#6b7a99;text-transform:uppercase;letter-spacing:2px;margin-bottom:7px">Select Agent</div>';
-    html+='<div style="display:flex;gap:8px;flex-wrap:wrap">';
-    agents.forEach(function(a){
-      var on=a.key===state.agent;
-      html+='<button onclick="cvAgent(\''+a.key+'\')" style="padding:6px 14px;border-radius:20px;border:1px solid '+(on?a.accent:a.accent+'40')+';background:'+(on?a.color+'60':'transparent')+';color:'+(on?a.accent:'#6b7a99')+';font-size:10px;cursor:pointer;font-family:Georgia,serif">'+a.label+'</button>';
-    });
-    html+='</div></div>';
+    // agent selector — only LAI agents are active; others grayed out
+  var LAI_KEYS=['risperdal','invega','abilify','haldol'];
+  var ALL_AGENTS=[
+    {key:'risperdal',label:'Risperdal',accent:'#4fc3f7',hasLai:true},
+    {key:'zyprexa',label:'Zyprexa',accent:'#ffb347',hasLai:false,note:'PDSS monitor required'},
+    {key:'seroquel',label:'Seroquel',accent:'#7ee8a2',hasLai:false},
+    {key:'abilify',label:'Abilify',accent:'#c084fc',hasLai:true},
+    {key:'cobenfy',label:'Cobenfy',accent:'#f472b6',hasLai:false},
+    {key:'geodon',label:'Geodon',accent:'#38bdf8',hasLai:false},
+    {key:'haldol',label:'Haldol',accent:'#fb923c',hasLai:true},
+    {key:'latuda',label:'Latuda',accent:'#a3e635',hasLai:false},
+    {key:'clozaril',label:'Clozaril',accent:'#e879f9',hasLai:false},
+    {key:'rexulti',label:'Rexulti',accent:'#34d399',hasLai:false},
+    {key:'caplyta',label:'Caplyta',accent:'#fb7185',hasLai:false},
+    {key:'vraylar',label:'Vraylar',accent:'#fbbf24',hasLai:false},
+    {key:'invega',label:'Invega',accent:'#67e8f9',hasLai:true},
+  ];
+  html+='<div style="margin-bottom:14px"><div style="font-size:9px;color:#6b7a99;text-transform:uppercase;letter-spacing:2px;margin-bottom:7px">Select Agent <span style="color:#4a5568;font-size:8px;text-transform:none;letter-spacing:0">— grayed out = no LAI available</span></div>';
+  html+='<div style="display:flex;gap:7px;flex-wrap:wrap">';
+  ALL_AGENTS.forEach(function(a){
+    var on=a.key===state.agent&&a.hasLai;
+    if(a.hasLai){
+      html+='<button onclick="cvAgent(\''+a.key+'\')" style="padding:6px 14px;border-radius:20px;border:1px solid '+(on?a.accent:a.accent+'50')+';background:'+(on?'#1a3a5e':'transparent')+';color:'+(on?a.accent:a.accent+'cc')+';font-size:10px;cursor:pointer;font-family:Georgia,serif;font-weight:'+(on?'600':'400')+'">'+a.label+'</button>';
+    } else {
+      html+='<span style="padding:6px 14px;border-radius:20px;border:1px solid #2a2f3e;color:#3a4050;font-size:10px;font-family:Georgia,serif;cursor:not-allowed;text-decoration:line-through" title="No LAI available">'+a.label+'</span>';
+    }
+  });
+  html+='</div></div>';
 
     // LAI selector
     html+='<div style="margin-bottom:16px"><div style="font-size:8px;color:#6b7a99;text-transform:uppercase;letter-spacing:2px;margin-bottom:7px">Select LAI Formulation</div>';
@@ -623,9 +694,14 @@ function converter(){
 }
 
 function nxtQ(){qi=(qi+1)%QZ.length;sa=false;render()}
+function enterTool(){
+  document.getElementById('landing').style.display='none';
+  document.getElementById('app').style.display='block';
+}
 function render(){var map={overview:overview,mechanism:mechanism,dosing:dosing,anc:anc,invega_lai:invega_lai,lais:lais,sideEffects:sideEffects,pearls:pearls,quiz:quiz,converter:converter};if(tab==='converter'){converter();return;}document.getElementById('cnt').innerHTML=map[tab]();}
 function switchTab(t,el){tab=t;qi=0;sa=false;document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));el.classList.add('on');render();}
 render();
 </script>
+</div>
 </body>
 </html>
